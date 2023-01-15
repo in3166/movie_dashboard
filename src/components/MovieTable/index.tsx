@@ -1,84 +1,39 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import { ChangeEvent, MouseEvent, useState, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Box,
   Table,
   TableHead,
   TableBody,
   TableCell,
   TableContainer,
-  IconButton,
   TableFooter,
   Paper,
   TablePagination,
   TableRow,
+  Popover,
 } from '@mui/material';
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
-import { IMoive } from 'types/movie';
-import { IMAGE_BASE_URL } from 'features';
+
+import TablePaginationActions from './TablePaginationActions';
 import styles from './table.module.scss';
+import { cx } from 'styles';
 
-interface TablePaginationActionsProps {
-  count: number;
-  page: number;
-  rowsPerPage: number;
-  onPageChange: (event: MouseEvent<HTMLButtonElement>, newPage: number) => void;
-}
-
-const TablePaginationActions = (props: TablePaginationActionsProps) => {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-
-  const handleFirstPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, 0);
-  };
-
-  const handleBackButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label='first page'>
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label='previous page'>
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='next page'
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='last page'
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </Box>
-  );
+type TableProps<T extends object> = {
+  filter: string;
+  columns: Record<
+    string,
+    {
+      name: string;
+      width: string;
+      accessor: (data: T) => ReactNode | string | undefined;
+    }
+  >;
+  rows: (T & { id: number })[];
 };
 
-const CustomPaginationActionsTable = ({ movies }: { movies: IMoive[] }) => {
-  const rows = movies;
+const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) => {
+  const { columns, rows, filter } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -90,37 +45,67 @@ const CustomPaginationActionsTable = ({ movies }: { movies: IMoive[] }) => {
     setPage(0);
   };
 
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
+
+  const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>, id: number) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedItem(id);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const navigator = useNavigate();
+  const handleRowClick = (id: number) => {
+    if (filter !== 'people') return;
+    navigator(`/people/${id}`);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 390 }} aria-label='custom pagination table'>
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell align='center'>vote_average</TableCell>
-            <TableCell align='center'>vote_count</TableCell>
-            <TableCell align='center'>release_date</TableCell>
-            <TableCell />
+            {Object.keys(columns).map((key) => {
+              const { name, width } = columns[key];
+              return (
+                <TableCell align='center' width={width} key={key}>
+                  {name}
+                </TableCell>
+              );
+            })}
+            <TableCell width={20} />
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
-            <TableRow key={row.id}>
-              <TableCell scope='row' className={styles.title}>
-                <img src={`${IMAGE_BASE_URL}/${row.poster_path}`} alt='movie poster' className={styles.poster} />
-                {row.title}
-              </TableCell>
-              <TableCell align='center'>{row.vote_average}</TableCell>
-              <TableCell style={{ width: 70 }} align='center'>
-                {row.vote_count}
-              </TableCell>
-              <TableCell style={{ width: 70 }} align='center'>
-                {row.release_date}
-              </TableCell>
-              <TableCell style={{ width: 70 }} align='center'>
-                <button type='button'>...</button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => {
+            return (
+              <TableRow
+                key={row.id}
+                onClick={() => handleRowClick(row.id)}
+                className={cx({ [styles.linkTr]: filter === 'people' })}
+              >
+                {Object.keys(columns).map((key) => {
+                  const { accessor } = columns[key];
+                  return (
+                    <TableCell key={key} align='center'>
+                      {accessor(row)}
+                    </TableCell>
+                  );
+                })}
+                <TableCell align='center'>
+                  <button type='button' onClick={(event) => handlePopoverClick(event, row.id)}>
+                    ...
+                  </button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
@@ -148,6 +133,23 @@ const CustomPaginationActionsTable = ({ movies }: { movies: IMoive[] }) => {
           </TableRow>
         </TableFooter>
       </Table>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handlePopoverClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <div>
+          <button type='button'>수정</button>
+        </div>
+        <div>
+          <button type='button'>삭제</button>
+        </div>
+      </Popover>
     </TableContainer>
   );
 };

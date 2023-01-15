@@ -15,7 +15,11 @@ const Header = () => {
 
   useLayoutEffect(() => {
     const storedEmail = store.get('email');
-    if (!storedEmail && storedEmail === '') navigate('/login');
+    console.log(storedEmail);
+    if (!storedEmail || storedEmail === '') {
+      navigate('/login');
+    }
+
     const requestToken = store.get('requestToken');
     setuserEmail(storedEmail);
     dispatch(setUser({ email: storedEmail, requestToken }));

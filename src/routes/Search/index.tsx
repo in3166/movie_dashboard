@@ -6,11 +6,12 @@ import styles from './search.module.scss';
 import { searchRequest } from 'services/movies';
 import { useSelector } from 'react-redux';
 import { getEmail } from 'states/user';
-import Header from 'components/Layout/Header';
+import { columns } from './column';
 
 const Search = (): JSX.Element => {
   const [movies, setMovies] = useState([]);
   const [filter, setFilter] = useState('movie');
+  const [currentColumns, setCurrentColumns] = useState(columns.movie);
   const [searchText, setSearchText] = useState('');
   const { email } = useSelector(getEmail);
 
@@ -27,6 +28,8 @@ const Search = (): JSX.Element => {
   const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { data } = await searchRequest[filter](searchText);
+    console.log(data);
+    setCurrentColumns(columns[filter]);
     setMovies(data.results);
   };
 
@@ -47,7 +50,7 @@ const Search = (): JSX.Element => {
         <input type='text' value={searchText} onChange={searchTextChangeHandler} />
         <button type='submit'>검색</button>
       </form>
-      <MovieTable movies={movies} />
+      <MovieTable rows={movies} columns={currentColumns} filter={filter} />
     </Container>
   );
 };

@@ -1,5 +1,4 @@
-import Layout from 'components/layout';
-import Sidebar from 'components/layout/Sidebar';
+import Layout from 'components/Layout';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';

@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+
+    button {
+      display: flex;
+      align-items: center;
+      margin-left: 3px;
+    }
+  }
+}

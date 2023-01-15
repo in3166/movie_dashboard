@@ -1,6 +1,5 @@
 import axios from 'axios';
-import store from 'store';
-import { MOVIE_API_URL, MOVIE_WEB_URL } from 'features';
+import { MOVIE_API_URL } from 'features';
 
 const apiClient = axios.create({
   baseURL: 'https://api.themoviedb.org',
@@ -8,9 +7,7 @@ const apiClient = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization:
-      'Bearer ' +
-      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMDkzOThhOWNmMmNlM2JiZjgyMTVhZGUyZDRhOTBjYyIsInN1YiI6IjYwMzQ4YmE1NmNmM2Q1MDA0MWZiYzMxZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RMzoLNVqXjyLuKCVfeEaTNvrl7mCS0PI__Amo9zazYI',
+    Authorization: `Bearer ${process.env.REACT_APP_MOVIE_ACCESS_TOKEN}`,
   },
 });
 
@@ -18,10 +15,6 @@ export const getRequestToken = () =>
   apiClient.post('/4/auth/request_token', {
     redirect_to: 'http://localhost:3000',
   });
-// .then((response) => {
-//   store.set('requestToken', response.data.request_token);
-//   window.location.href = `${MOVIE_WEB_URL}/auth/access?request_token=${response.data.request_token}`;
-// });
 
 export const getAccessToken = (token: string) =>
   apiClient.post(`${MOVIE_API_URL}/4/auth/access_token`, {
@@ -41,5 +34,11 @@ export const getMovieList = (token: string) =>
     },
   });
 
-export const searchMovie = (text: string) =>
-  axios.get(`${MOVIE_API_URL}/list/1?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`);
+export const searchRequest: { [key: string]: (text: string) => Promise<any> } = {
+  movie: (text: string) =>
+    axios.get(`${MOVIE_API_URL}/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`),
+  people: (text: string) =>
+    axios.get(`${MOVIE_API_URL}/3/search/person?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`),
+  tv: (text: string) =>
+    axios.get(`${MOVIE_API_URL}/3/search/tv?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`),
+};

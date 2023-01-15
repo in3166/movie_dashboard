@@ -1,0 +1,144 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/responsive';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.aside {
+  z-index: 2;
+  min-height: 100vh;
+  overflow: auto;
+  color: colors.$SIDE_FONT_COLOR;
+  text-align: center;
+  background-color: colors.$SIDE_BACKGROUND_COLOR;
+  box-shadow: 0 0 10px 0 rgba(139, 139, 139, 58.9%);
+
+  .logo {
+    @include flexbox.flexbox;
+    width: 100%;
+    margin: 7px 0;
+    font-size: 19px;
+    color: colors.$SIDE_FONT_COLOR;
+
+    a {
+      &:visited {
+        color: colors.$SIDE_FONT_COLOR;
+        text-decoration: none;
+      }
+    }
+
+    svg {
+      width: 32px;
+      height: auto;
+      margin-right: 5px;
+      color: colors.$LOGIN_BUTTON_BACKGROUND;
+    }
+  }
+
+  .nav {
+    margin: 70px 0;
+    font-size: 13px;
+
+    li {
+      margin: 1px auto;
+      cursor: pointer;
+
+      span {
+        margin-left: 10px;
+      }
+
+      > a {
+        display: flex;
+        align-items: center;
+        height: 45px;
+        padding: 10px 15px;
+        color: colors.$SIDE_FONT_COLOR;
+        letter-spacing: 2px;
+
+        &:hover {
+          &::before {
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            background-color: colors.$BACKGROUND_COLOR;
+          }
+          color: colors.$SIDE_LINK;
+          background-color: colors.$SIDE_MENU_HOVER;
+        }
+
+        &:link {
+          color: colors.$SIDE_FONT_COLOR;
+          text-decoration: none;
+        }
+
+        &:visited {
+          text-decoration: none;
+        }
+      }
+
+      .isActive {
+        width: 100%;
+        font-weight: 400;
+        color: colors.$SIDE_LINK;
+        background-color: colors.$SIDE_MENU_ACTIVE;
+      }
+    }
+  }
+
+  .menuToggle {
+    z-index: 1000;
+    align-items: center;
+    height: 40px;
+
+    svg {
+      width: 30px;
+      height: 30px;
+
+      path {
+        fill: colors.$GRAYA;
+      }
+    }
+
+    &:hover {
+      path {
+        fill: colors.$GRAY2;
+      }
+    }
+  }
+}
+
+.hideSidebar {
+  width: 0;
+  min-width: 0;
+  transition: all 0.2s ease-in-out;
+
+  .menuToggle {
+    @include position.position(fixed, auto auto 10px 13px);
+  }
+}
+
+@include responsive.mobileOnly {
+  .aside {
+    width: 0;
+    min-width: 0;
+    padding: 0;
+
+    .nav {
+      margin: 100px 7px;
+    }
+  }
+
+  .openSidebar {
+    width: 100px !important;
+  }
+}
+
+.openSidebar {
+  width: 200px;
+  min-width: 200px;
+  transition: all 0.2s ease-in-out;
+
+  .menuToggle {
+    @include position.position(fixed, auto auto 10px 150px);
+  }
+}

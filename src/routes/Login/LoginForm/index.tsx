@@ -1,5 +1,4 @@
 import { useRef, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import store from 'store';
 import useFormInput from 'hooks/useFormInput';
@@ -13,7 +12,6 @@ import { MOVIE_WEB_URL } from 'features';
 const LoginForm = () => {
   const inputFocusRef = useRef(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const email = useFormInput({ validateFunction: validateEmail });
   const password = useFormInput({ validateFunction: validatePassword });
 

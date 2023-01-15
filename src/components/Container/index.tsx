@@ -7,7 +7,7 @@ interface IContainerProps {
   color?: string;
   width?: string;
 }
-const Container = ({ children, color = 'gray', width = 'lg' }: IContainerProps): JSX.Element => {
+const Container = ({ children, color = 'white', width = 'lg' }: IContainerProps): JSX.Element => {
   return <div className={cx(styles.container, styles[`${color}`], styles[`${width}`])}>{children}</div>;
 };
 

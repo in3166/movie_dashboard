@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import MovieFilterIcon from '@mui/icons-material/MovieFilter';
+import PageviewIcon from '@mui/icons-material/Pageview';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { LogoImage, MenuBar } from 'assets/svgs';
 import { cx } from 'styles';
 import styles from './sidebar.module.scss';
@@ -16,14 +19,13 @@ const Sidebar = (): JSX.Element => {
       setVisibleSideBar(false);
     }
   }, []);
-
   return (
     <aside
       className={cx(styles.aside, { [styles.hideSidebar]: !visibleSideBar }, { [styles.openSidebar]: visibleSideBar })}
     >
       <div className={styles.logo}>
         <NavLink to='/' aria-label='link to home page' className={styles.logo}>
-          <LogoImage />
+          <MovieFilterIcon />
           Dashboard
         </NavLink>
       </div>
@@ -35,7 +37,8 @@ const Sidebar = (): JSX.Element => {
               aria-label='link to movielist page'
               className={({ isActive }) => cx({ [styles.isActive]: isActive })}
             >
-              movie 목록 조회
+              <ListAltIcon />
+              <span>movie 목록 조회</span>
             </NavLink>
           </li>
           <li>
@@ -44,7 +47,8 @@ const Sidebar = (): JSX.Element => {
               aria-label='link to search page'
               className={({ isActive }) => cx({ [styles.isActive]: isActive })}
             >
-              검색
+              <PageviewIcon />
+              <span>검색</span>
             </NavLink>
           </li>
         </ul>

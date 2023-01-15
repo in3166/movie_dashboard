@@ -1,12 +1,15 @@
-import Sidebar from './Sidebar';
-import ErrorFallback from './ErrorFallback';
 import { Outlet } from 'react-router-dom';
+import ErrorFallback from './ErrorFallback';
+import Sidebar from './Sidebar';
+import styles from './layout.module.scss';
 
 const Layout = () => {
   return (
     <>
       <Sidebar />
-      <Outlet />
+      <main className={styles.main}>
+        <Outlet />
+      </main>
     </>
   );
 };

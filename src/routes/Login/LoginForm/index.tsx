@@ -1,12 +1,14 @@
 import { useRef, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
+import store from 'store';
 import useFormInput from 'hooks/useFormInput';
-import { setEmail } from 'states/user';
+import { setUser } from 'states/user';
 import { validateEmail, validatePassword } from 'utils/validateInput';
 import InputText from 'routes/Login/LoginForm/InputText/index';
 import styles from '../login.module.scss';
+import { getRequestToken } from 'services/movies';
+import { MOVIE_WEB_URL } from 'features';
 
 const LoginForm = () => {
   const inputFocusRef = useRef(null);
@@ -15,14 +17,20 @@ const LoginForm = () => {
   const email = useFormInput({ validateFunction: validateEmail });
   const password = useFormInput({ validateFunction: validatePassword });
 
-  const handleOnSubmit = (e: FormEvent) => {
+  const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     if (!email.valueIsValid || !password.valueIsValid) {
       console.log('invalid');
       return;
     }
-    dispatch(setEmail(email.value));
-    navigate('/');
+
+    const { data } = await getRequestToken();
+    store.set('requestToken', data.request_token);
+    store.set('email', email.value);
+
+    // dispatch(setUser({ email: email.value, requestToken: data.request_token }));
+    window.location.href = `${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`;
   };
 
   return (

@@ -1,0 +1,18 @@
+@use '/styles/constants/colors';
+@use '/styles/mixins/animation';
+
+.loading {
+  width: 100%;
+  margin: 30px 0;
+  text-align: center;
+
+  > svg {
+    width: auto;
+    height: 50px;
+    animation: rotation 1s infinite linear;
+
+    path {
+      fill: colors.$FONT_COLOR !important;
+    }
+  }
+}

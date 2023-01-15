@@ -106,8 +106,11 @@ section {
   display: block;
 }
 
-body {
-  line-height: 1;
+body,
+html,
+#root {
+  width: 100%;
+  height: 100%;
 }
 
 ol,

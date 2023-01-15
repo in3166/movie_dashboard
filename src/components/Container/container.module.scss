@@ -1,0 +1,35 @@
+@use '/src/styles/mixins/responsive';
+@use '/src/styles/constants/colors';
+
+.container {
+  position: relative;
+  padding: 30px;
+  margin-top: 35px;
+  border-radius: 10px;
+
+  @include responsive.mobileOnly {
+    width: 100% !important;
+    padding: 15px;
+    margin: 15px 10px 20px;
+  }
+}
+
+.sm {
+  width: 50%;
+}
+
+.md {
+  width: 70%;
+}
+
+.lg {
+  width: 100%;
+}
+
+.white {
+  background-color: #efeff1;
+}
+
+.gray {
+  background-color: #e7e6e6;
+}

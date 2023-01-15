@@ -1,0 +1,70 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.inputForm {
+  @include position.position(relative, null);
+  display: flex;
+  flex-direction: column;
+  margin: 35px 0 20px;
+
+  .formTitle {
+    margin-bottom: 5px;
+    font-size: 10px;
+    color: colors.$INPUT_TEXT;
+  }
+
+  .iconHidden {
+    display: none;
+  }
+
+  svg {
+    @include position.position(absolute, 30px -17px auto auto);
+    block-size: 12px;
+    width: fit-content;
+    cursor: pointer;
+
+    path {
+      fill: rgb(109, 109, 109);
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .inputText {
+    padding: 5px;
+    border-bottom: 1.5px solid colors.$INPUT_BORDER;
+    border-radius: 1px;
+  }
+
+  .inputTextarea {
+    padding: 5px;
+    border: none;
+    border-bottom: 1.5px solid colors.$INPUT_BORDER;
+    border-radius: 9px;
+  }
+
+  .readOnlyInput {
+    background-color: colors.$GRAYE;
+  }
+
+  :root[color-theme='dark'] & {
+    .formTitle {
+      margin-bottom: 5px;
+    }
+
+    svg {
+      path {
+        fill: rgb(165, 165, 165);
+      }
+    }
+  }
+}
+
+.errorMessage {
+  font-size: 13px !important;
+  color: colors.$RED;
+  letter-spacing: 0.5px;
+}

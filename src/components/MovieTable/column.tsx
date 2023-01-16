@@ -20,7 +20,7 @@ export const columns: {
       name: 'Title',
       width: '270',
       accessor: (payload: IMovieItem) => {
-        const imgSrc = payload.poster_path === null ? defaultMovie : `${IMAGE_BASE_URL}/${payload.poster_path}`;
+        const imgSrc = !payload.poster_path ? defaultMovie : `${IMAGE_BASE_URL}/${payload.poster_path}`;
 
         return (
           <div className={styles.title}>
@@ -51,7 +51,7 @@ export const columns: {
       name: 'Name',
       width: '270',
       accessor: (payload: ITvItem) => {
-        const imgSrc = payload.poster_path === null ? defaultTv : `${IMAGE_BASE_URL}/${payload.poster_path}`;
+        const imgSrc = !payload.poster_path ? defaultTv : `${IMAGE_BASE_URL}/${payload.poster_path}`;
         return (
           <div className={styles.title}>
             <img className={styles.poster} src={imgSrc} alt='tv poster' />

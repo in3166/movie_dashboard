@@ -1,20 +1,2 @@
 @use '/src/styles/constants/colors';
 @use '/src/styles/mixins/responsive';
-
-.addButton {
-  float: right;
-  width: 130px;
-  padding: 5px;
-  margin: 15px 0;
-  color: colors.$GRAYE;
-  background-color: colors.$LOGIN_BUTTON_BACKGROUND;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: colors.$LOGIN_BUTTON_HOVER_BACKGROUND;
-  }
-
-  &:active {
-    background-color: colors.$LOGIN_BUTTON_ACTIVE_BACKGROUND;
-  }
-}

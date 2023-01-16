@@ -14,16 +14,20 @@ th {
     min-height: 70px;
     max-height: 70px;
     margin-right: 15px;
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
 .row {
   cursor: pointer;
+
+  &:hover {
+    background-color: colors.$GRAYE;
+  }
 }
 
 .selectedRow {
-  background-color: colors.$GRAYE;
+  background-color: colors.$GRAYD;
 }
 
 .tableFooter {

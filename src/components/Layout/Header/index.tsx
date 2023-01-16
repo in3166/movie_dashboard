@@ -1,11 +1,11 @@
 import { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import store from 'store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import store from 'store';
 
-import styles from './header.module.scss';
 import { setUser } from 'states/user';
+import styles from './header.module.scss';
 
 const Header = () => {
   const [userEmail, setuserEmail] = useState('');

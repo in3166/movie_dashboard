@@ -16,25 +16,29 @@ export const getRequestToken = () =>
     redirect_to: BASE_URL,
   });
 
-export const getAccessToken = (token: string) =>
+export const getAccessToken = (requestToken: string) =>
   apiClient.post(`${MOVIE_API_URL}/4/auth/access_token`, {
-    request_token: token,
+    request_token: requestToken,
   });
 
-export const getSessionId = (token: string) =>
+export const getSessionId = (requestToken: string) =>
   axios.get(
-    `${MOVIE_API_URL}3/authentication/session/convert/4?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&request_token=${token}`
+    `${MOVIE_API_URL}3/authentication/session/convert/4?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&request_token=${requestToken}`
   );
 
-export const getMovieList = (token: string) =>
-  axios.get(`${MOVIE_API_URL}/4/list/1?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
+export const getMovieList = (accessToken: string) =>
+  axios.get(`${MOVIE_API_URL}/4/list/8235984?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
+      'Cache-Control': 'no-cache',
+    },
+    params: {
+      timestamp: new Date().getTime(),
     },
   });
 
-export const getPersion = (id: string) =>
+export const getPerson = (id: string) =>
   axios.get(`${MOVIE_API_URL}/3/person/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
 
 export const searchRequest: { [key: string]: (text: string) => Promise<any> } = {

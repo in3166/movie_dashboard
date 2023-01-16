@@ -1,21 +1,20 @@
 import { useState, FormEvent, useCallback, ChangeEvent } from 'react';
-import MovieTable from 'components/MovieTable';
-import Container from 'components/Container';
-
-import styles from './search.module.scss';
+import { IPersonItem } from 'types/item';
 import { searchRequest } from 'services/movies';
-import { useSelector } from 'react-redux';
-import { getEmail } from 'states/user';
-import { columns } from './column';
-import { IMovieItem, IPersonItem, ITvItem } from 'types/item';
-import { IMAGE_BASE_URL } from 'features';
+import { IMAGE_BASE_URL, MOVIE_API_URL } from 'features';
+import MovieTable from 'components/MovieTable';
 import defaultPerson from 'assets/svgs/defaultPerson.png';
+import styles from './search.module.scss';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { getSelectedMovies, setSelectedMovies } from 'states/moives';
+import axios from 'axios';
+import store from 'store';
+import { useDispatch } from 'react-redux';
 
 const Search = (): JSX.Element => {
   const [items, setItems] = useState([]);
   const [selectFilterValue, setSelectFilterValue] = useState('movie');
   const [filter, setFilter] = useState('movie');
-  const [currentColumns, setCurrentColumns] = useState(columns.movie);
   const [searchText, setSearchText] = useState('');
 
   const searchTextChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -28,20 +27,47 @@ const Search = (): JSX.Element => {
     setSelectFilterValue(value);
   }, []);
 
+  const dispatch = useDispatch();
   const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { data } = await searchRequest[selectFilterValue](searchText);
-    console.log(data);
     setFilter(selectFilterValue);
-    setCurrentColumns(columns[selectFilterValue]);
     setItems(data.results);
+    dispatch(setSelectedMovies([]));
   };
+
   const [selectedPerson, setSelectedPerson] = useState([]);
   const handleClickPerson = (person: IPersonItem) => {
     setSelectedPerson(person.known_for || []);
   };
 
-  console.log(selectedPerson);
+  const selectedMovies = useAppSelector(getSelectedMovies);
+  const handleClickAdd = () => {
+    if (!selectedMovies || selectedMovies.length === 0) return;
+    const selectedItems = selectedMovies.map((value) => {
+      return { media_type: value.media_type, media_id: value.id };
+    });
+    const storedAccessToken = store.get('accessToken');
+    axios
+      .post(
+        `${MOVIE_API_URL}/4/list/8235984/items`,
+        {
+          items: selectedItems,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${storedAccessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        dispatch(setSelectedMovies([]));
+      })
+      .catch((err) => {
+        console.log('err:', err);
+      });
+  };
 
   return (
     <>
@@ -71,6 +97,7 @@ const Search = (): JSX.Element => {
                     role='presentation'
                     className={styles.peopleList}
                     onClick={() => handleClickPerson(value)}
+                    title={value.name}
                   >
                     <img
                       src={value.profile_path === null ? defaultPerson : IMAGE_BASE_URL + value.profile_path}
@@ -82,25 +109,30 @@ const Search = (): JSX.Element => {
                 );
               })}
             </div>
-            <div>
+            <div className={styles.personListWrapper}>
               <h3>출연작</h3>
-              <h4>Movie</h4>
-              <MovieTable
-                rows={selectedPerson?.filter((value: { media_type: string }) => value.media_type === 'movie')}
-                columns={columns.movie}
-                filter='movie'
-              />
-              <h4>TV</h4>
-              <MovieTable
-                rows={selectedPerson?.filter((value: { media_type: string }) => value.media_type === 'tv')}
-                columns={columns.tv}
-                filter='tv'
-              />
+              <section className={styles.tableSection}>
+                <h4>Movie</h4>
+                <MovieTable
+                  rows={selectedPerson?.filter((value: { media_type: string }) => value.media_type === 'movie')}
+                  filter='movie'
+                />
+              </section>
+              <section className={styles.tableSection}>
+                <h4>TV</h4>
+                <MovieTable
+                  rows={selectedPerson?.filter((value: { media_type: string }) => value.media_type === 'tv')}
+                  filter='tv'
+                />
+              </section>
             </div>
           </>
         ) : (
-          <MovieTable rows={items} columns={currentColumns} filter={filter} />
+          <MovieTable rows={items} filter={filter} />
         )}
+        <button type='button' className={styles.addButton} onClick={handleClickAdd}>
+          추가
+        </button>
       </div>
     </>
   );

@@ -1,13 +1,14 @@
 import { useRef, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import store from 'store';
-import useFormInput from 'hooks/useFormInput';
+
 import { setUser } from 'states/user';
-import { validateEmail, validatePassword } from 'utils/validateInput';
-import InputText from 'routes/Login/LoginForm/InputText/index';
-import styles from '../login.module.scss';
+import useFormInput from 'hooks/useFormInput';
 import { getRequestToken } from 'services/movies';
 import { MOVIE_WEB_URL } from 'features';
+import { validateEmail, validatePassword } from 'utils/validateInput';
+import InputText from './InputText/index';
+import styles from '../login.module.scss';
 
 const LoginForm = () => {
   const inputFocusRef = useRef(null);

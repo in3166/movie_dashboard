@@ -2,7 +2,7 @@ import { useRef, FormEvent } from 'react';
 import store from 'store';
 
 import useFormInput from 'hooks/useFormInput';
-import { getRequestToken } from 'services/movies';
+import { getRequestToken } from 'services/movieAPI';
 import { MOVIE_WEB_URL } from 'features';
 import { validateEmail, validatePassword } from 'utils/validateInput';
 import InputText from './InputText/index';
@@ -48,6 +48,7 @@ const LoginForm = () => {
         onChange={password.valueChangeHandler}
         onBlur={password.inputBlurHandler}
         hasError={password.hasError}
+        errorMessage='비밀번호 형식이 맞지 않습니다.'
         placeholder='Password'
       />
       <button type='submit' className={styles.loginButton}>

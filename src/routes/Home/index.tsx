@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { IMovieItem } from 'types/item';
-import { getMovieList } from 'services/movies';
+import { getMovieList } from 'services/movieAPI';
 import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
 import { getMovies, setComments, setMovies } from 'states/moives';

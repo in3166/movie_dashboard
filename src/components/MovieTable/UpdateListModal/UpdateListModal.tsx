@@ -4,7 +4,7 @@ import store from 'store';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { getComments, setComments } from 'states/moives';
-import { updateMovieItem } from 'services/movies';
+import { updateMovieItem } from 'services/movieAPI';
 import Modal from './Modal';
 import styles from './updateListModal.module.scss';
 

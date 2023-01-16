@@ -4,7 +4,7 @@ import axios from 'axios';
 import store from 'store';
 
 import { MOVIE_API_URL } from 'features';
-import { getAccessToken } from 'services/movies';
+import { getAccessToken } from 'services/movieAPI';
 import { useAppDispatch } from './useAppDispatch';
 
 export const useInitializeUser = () => {

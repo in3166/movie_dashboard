@@ -22,7 +22,7 @@ import { getMovies, getSelectedMovies, setMovies, setSelectedMovies } from 'stat
 import { useLocation } from 'react-router-dom';
 import { columns } from './column';
 import UpdateListModal from './UpdateListModal/UpdateListModal';
-import { deleteMovieItem } from 'services/movies';
+import { deleteMovieItem } from 'services/movieAPI';
 
 type TableProps<T extends object> = {
   filter: string;

@@ -1,6 +1,6 @@
 import { useState, FormEvent, useCallback, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchRequest } from 'services/movies';
+import { searchRequest } from 'services/movieAPI';
 import { setSelectedMovies } from 'states/moives';
 import styles from '../search.module.scss';
 

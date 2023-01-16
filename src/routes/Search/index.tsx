@@ -4,7 +4,7 @@ import store from 'store';
 
 import { IPersonItem } from 'types/item';
 import { IMAGE_BASE_URL } from 'features';
-import { addMovieItem } from 'services/movies';
+import { addMovieItem } from 'services/movieAPI';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { getSelectedMovies, setSelectedMovies } from 'states/moives';
 import MovieTable from 'components/MovieTable';

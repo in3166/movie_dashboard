@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import user from './user';
+import movies from './moives';
 
 export const store = configureStore({
   reducer: {
     user,
+    movies,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),

@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import { IMAGE_BASE_URL } from 'features';
-import { IPersonItem, IMovieItem, ITvItem } from 'types/item';
+import { IMovieItem, ITvItem } from 'types/item';
 import styles from 'components/MovieTable/table.module.scss';
+import defaultMovie from 'assets/svgs/defaultMovie.png';
+import defaultTv from 'assets/svgs/defaultTv.png';
 
 export const columns: {
   [key: string]: Record<
@@ -18,9 +20,11 @@ export const columns: {
       name: 'Title',
       width: '270',
       accessor: (payload: IMovieItem) => {
+        const imgSrc = payload.poster_path === null ? defaultMovie : `${IMAGE_BASE_URL}/${payload.poster_path}`;
+
         return (
           <div className={styles.title}>
-            <img className={styles.poster} src={`${IMAGE_BASE_URL}/${payload.poster_path}`} alt='movie poster' />
+            <img className={styles.poster} src={imgSrc} alt='movie poster' />
             {payload.title}
           </div>
         );
@@ -47,9 +51,10 @@ export const columns: {
       name: 'Name',
       width: '270',
       accessor: (payload: ITvItem) => {
+        const imgSrc = payload.poster_path === null ? defaultTv : `${IMAGE_BASE_URL}/${payload.poster_path}`;
         return (
           <div className={styles.title}>
-            <img className={styles.poster} src={`${IMAGE_BASE_URL}/${payload.poster_path}`} alt='movie poster' />
+            <img className={styles.poster} src={imgSrc} alt='tv poster' />
             {payload.name}
           </div>
         );
@@ -69,35 +74,6 @@ export const columns: {
       name: 'first_air_date',
       width: '50',
       accessor: (payload: ITvItem) => payload.first_air_date,
-    },
-  },
-  people: {
-    name: {
-      name: 'Name',
-      width: '270',
-      accessor: (payload: IPersonItem) => {
-        return (
-          <div className={styles.title}>
-            <img className={styles.poster} src={`${IMAGE_BASE_URL}/${payload.profile_path}`} alt='movie poster' />
-            {payload.name}
-          </div>
-        );
-      },
-    },
-    gender: {
-      name: 'gender',
-      width: '50',
-      accessor: (payload: IPersonItem) => (payload.gender === 2 ? '남자' : '여자'),
-    },
-    popularity: {
-      name: 'popularity',
-      width: '50',
-      accessor: (payload: IPersonItem) => payload.popularity,
-    },
-    known_for_department: {
-      name: 'known_for_department',
-      width: '50',
-      accessor: (payload: IPersonItem) => payload.known_for_department,
     },
   },
 };

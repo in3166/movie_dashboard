@@ -1,5 +1,4 @@
 import { ChangeEvent, MouseEvent, useState, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Table,
   TableHead,
@@ -12,7 +11,7 @@ import {
   TableRow,
   Popover,
 } from '@mui/material';
-
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import TablePaginationActions from './TablePaginationActions';
 import styles from './table.module.scss';
 import { cx } from 'styles';
@@ -34,7 +33,6 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
   const { columns, rows, filter } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -46,29 +44,36 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
   };
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const [selectedPopoverItem, setSelectedPopoverItem] = useState<number | null>(null);
 
   const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>, id: number) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
-    setSelectedItem(id);
+    setSelectedPopoverItem(id);
   };
-
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
 
-  const navigator = useNavigate();
+  const [selectedRow, setSelectedRow] = useState<number[]>([]);
   const handleRowClick = (id: number) => {
-    if (filter !== 'people') return;
-    navigator(`/people/${id}`);
+    const remove = selectedRow.includes(id);
+    if (remove) {
+      setSelectedRow((prev) => prev.filter((value) => value !== id));
+    } else {
+      setSelectedRow((prev) => [...prev, id]);
+    }
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+
+  const handleClickAdd = () => {
+    console.log(selectedRow);
+  };
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 390 }} aria-label='custom pagination table'>
+      <Table sx={{ minWidth: 350 }} aria-label='custom pagination table'>
         <TableHead>
           <TableRow>
             {Object.keys(columns).map((key) => {
@@ -88,7 +93,11 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
               <TableRow
                 key={row.id}
                 onClick={() => handleRowClick(row.id)}
-                className={cx({ [styles.linkTr]: filter === 'people' })}
+                className={cx({
+                  [styles.row]: true,
+                  [styles.linkTr]: filter === 'people',
+                  [styles.selectedRow]: selectedRow.includes(row.id),
+                })}
               >
                 {Object.keys(columns).map((key) => {
                   const { accessor } = columns[key];
@@ -100,19 +109,21 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
                 })}
                 <TableCell align='center'>
                   <button type='button' onClick={(event) => handlePopoverClick(event, row.id)}>
-                    ...
+                    <MoreVertIcon fontSize='small' className={styles.rowButton} />
                   </button>
                 </TableCell>
               </TableRow>
             );
           })}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+          {rows.length === 0 && (
+            <TableRow>
+              <TableCell align='center' colSpan={6}>
+                No Items.
+              </TableCell>
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
+        <TableFooter className={styles.tableFooter}>
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
@@ -134,7 +145,6 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
         </TableFooter>
       </Table>
       <Popover
-        id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
@@ -144,10 +154,14 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
         }}
       >
         <div>
-          <button type='button'>수정</button>
+          <button type='button' className={styles.popButton}>
+            수정
+          </button>
         </div>
         <div>
-          <button type='button'>삭제</button>
+          <button type='button' className={styles.popButton} onClick={handleClickAdd}>
+            삭제
+          </button>
         </div>
       </Popover>
     </TableContainer>

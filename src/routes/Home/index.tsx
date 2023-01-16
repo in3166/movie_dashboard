@@ -40,7 +40,9 @@ const Home = (): JSX.Element => {
   return (
     <Container>
       <MovieTable<IMovieItem> rows={movies} columns={columns} filter='movie' />
-      <button type='button'>추가</button>
+      <button type='button' className={styles.addButton}>
+        추가
+      </button>
     </Container>
   );
 };

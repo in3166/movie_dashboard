@@ -1,3 +1,5 @@
+@use '/src/styles/constants/colors';
+
 th {
   color: rgb(136, 135, 135) !important;
 }
@@ -13,6 +15,41 @@ th {
     max-height: 70px;
     margin-right: 15px;
     object-fit: cover;
+  }
+}
+
+.row {
+  cursor: pointer;
+}
+
+.selectedRow {
+  background-color: colors.$GRAYE;
+}
+
+.tableFooter {
+  td {
+    overflow: hidden;
+  }
+}
+
+.rowButton {
+  color: rgb(187, 187, 187);
+
+  &:hover {
+    color: rgb(143, 142, 142);
+  }
+}
+
+.popButton {
+  width: 50px;
+  height: 30px;
+
+  &:hover {
+    background-color: colors.$GRAYE;
+  }
+
+  &:active {
+    background-color: colors.$GRAYD;
   }
 }
 

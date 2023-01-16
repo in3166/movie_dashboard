@@ -1,9 +1,9 @@
-import Layout from 'components/Layout';
 import { Routes, Route } from 'react-router-dom';
+import Layout from 'components/Layout';
 import Home from './Home';
 import Login from './Login';
-import styles from './routes.module.scss';
 import Search from './Search';
+import styles from './routes.module.scss';
 
 const App = () => {
   return (

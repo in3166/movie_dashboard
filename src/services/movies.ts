@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { MOVIE_API_URL } from 'features';
+import { MOVIE_API_URL, BASE_URL } from 'features';
 
 const apiClient = axios.create({
-  baseURL: 'https://api.themoviedb.org',
+  baseURL: MOVIE_API_URL,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -13,7 +13,7 @@ const apiClient = axios.create({
 
 export const getRequestToken = () =>
   apiClient.post('/4/auth/request_token', {
-    redirect_to: 'http://localhost:3000',
+    redirect_to: BASE_URL,
   });
 
 export const getAccessToken = (token: string) =>
@@ -33,6 +33,9 @@ export const getMovieList = (token: string) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const getPersion = (id: string) =>
+  axios.get(`${MOVIE_API_URL}/3/person/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
 
 export const searchRequest: { [key: string]: (text: string) => Promise<any> } = {
   movie: (text: string) =>

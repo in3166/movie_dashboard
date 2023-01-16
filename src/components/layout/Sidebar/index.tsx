@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import { LogoImage, MenuBar } from 'assets/svgs';
+import { MenuBar } from 'assets/svgs';
+import logoImg from 'assets/svgs/logo.png';
 import { cx } from 'styles';
 import styles from './sidebar.module.scss';
 
@@ -25,7 +26,7 @@ const Sidebar = (): JSX.Element => {
     >
       <div className={styles.logo}>
         <NavLink to='/' aria-label='link to home page' className={styles.logo}>
-          <MovieFilterIcon />
+          <img src={logoImg} className={styles.logoImage} alt='logo' />
           Dashboard
         </NavLink>
       </div>
@@ -38,7 +39,7 @@ const Sidebar = (): JSX.Element => {
               className={({ isActive }) => cx({ [styles.isActive]: isActive })}
             >
               <ListAltIcon />
-              <span>movie 목록 조회</span>
+              <span>Movie 목록 조회</span>
             </NavLink>
           </li>
           <li>

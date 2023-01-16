@@ -24,13 +24,19 @@ const Header = () => {
     setuserEmail(storedEmail);
     dispatch(setUser({ email: storedEmail, requestToken }));
   }, [dispatch, navigate]);
+  const navigator = useNavigate();
+  const handleLogout = () => {
+    console.log(store.get('accessToken'));
+    store.remove('accessToken');
+    navigator('/login');
+  };
 
   return (
     <header className={styles.header}>
       <h2>{location.pathname === '/' ? 'Movie 목록 조회' : '검색'}</h2>
       <div className={styles.userInfo}>
         {userEmail}
-        <button type='button'>
+        <button type='button' onClick={handleLogout}>
           <AccountCircleIcon />
         </button>
       </div>

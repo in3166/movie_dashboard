@@ -1,13 +1,13 @@
-import styles from './errorFallback.module.scss'
+import styles from './errorFallback.module.scss';
 
 interface IErrorFallbackProps {
-  error: Error
+  error: Error;
 }
 
 const ErrorFallback = ({ error }: IErrorFallbackProps) => {
   const myErrorHandler = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   return (
     <div role='alert' className={styles.wrapper}>
@@ -20,7 +20,7 @@ const ErrorFallback = ({ error }: IErrorFallbackProps) => {
         새로고침
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default ErrorFallback
+export default ErrorFallback;

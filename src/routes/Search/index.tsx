@@ -71,21 +71,26 @@ const Search = (): JSX.Element => {
 
   return (
     <>
-      <form onSubmit={handleSearchSubmit} className={styles.searchInput}>
-        <select onChange={handleFilterChange}>
-          <option key='movie' value='movie'>
-            movie
-          </option>
-          <option key='people' value='people'>
-            people
-          </option>
-          <option key='tv' value='tv'>
-            tv
-          </option>
-        </select>
-        <input type='text' value={searchText} onChange={searchTextChangeHandler} />
-        <button type='submit'>검색</button>
+      <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
+        <div className={styles.inputWrapper}>
+          <select onChange={handleFilterChange} className={styles.filterSelect}>
+            <option key='movie' value='movie'>
+              Movie
+            </option>
+            <option key='tv' value='tv'>
+              TV
+            </option>
+            <option key='people' value='people'>
+              People
+            </option>
+          </select>
+          <input type='text' value={searchText} className={styles.inputText} onChange={searchTextChangeHandler} />
+        </div>
+        <button type='submit' className={styles.submitSearch}>
+          검색
+        </button>
       </form>
+
       <div>
         {filter === 'people' ? (
           <>

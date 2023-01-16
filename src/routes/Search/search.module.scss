@@ -1,15 +1,56 @@
 @use '/src/styles/constants/colors';
 @use '/src/styles/mixins/responsive';
 
-.searchInput {
-  margin: 35px 10px 7px;
-  border: 1px solid gray;
+.searchForm {
+  display: flex;
+  justify-content: space-between;
+  margin: 35px 10px 20px;
+  border: 1px solid #7e7e7e;
+  border-radius: 5px;
+
+  .inputWrapper {
+    display: flex;
+    width: 100%;
+
+    .filterSelect {
+      padding: 3px 5px;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      border-right: 1px solid #7e7e7e;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #e9e9e9;
+      }
+    }
+
+    .inputText {
+      width: 100%;
+      padding: 0 10px;
+    }
+  }
+
+  .submitSearch {
+    min-width: 33px;
+    height: 100%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    &:hover {
+      background-color: #e7e7e7;
+    }
+
+    &:active {
+      background-color: #c9c9c9;
+    }
+  }
 }
 
 .peopleContainer {
   display: flex;
   padding: 10px;
-  margin: 10px 0;
+  margin: 0 0 10px;
   overflow: auto;
   border-radius: 6px;
   box-shadow: 0 0 1px 1px rgba(11, 11, 14, 20%);

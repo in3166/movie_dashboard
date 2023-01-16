@@ -11,9 +11,10 @@ import styles from './home.module.scss';
 const Home = (): JSX.Element => {
   const [movies, setmovies] = useState<IMovieItem[]>([]);
   const navigator = useNavigate();
-
+  // TODO: 세션 아이디 없으면 로그인 화면으로 AND 권한 인증 분리
   useLayoutEffect(() => {
     const storedAccessToken = store.get('accessToken');
+    console.log('storedAccessToken: ', storedAccessToken);
     if (!storedAccessToken) {
       const requestToken = store.get('requestToken');
       getAccessToken(requestToken)

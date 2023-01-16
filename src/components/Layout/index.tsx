@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import ErrorFallback from './ErrorFallback';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import styles from './layout.module.scss';

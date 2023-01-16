@@ -1,0 +1,63 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/animation';
+@use '/src/styles/mixins/flexbox';
+
+.header {
+  @include flexbox.flexbox(between, center);
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.content {
+  margin: 15px 0;
+
+  textarea {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+  }
+}
+
+.footer {
+  @include flexbox.flexbox(end);
+  width: 100%;
+
+  button {
+    height: 44px;
+    font-size: 15px;
+  }
+
+  .cancelButton {
+    width: fit-content;
+    padding: 5px 25px;
+    color: colors.$GRAY2;
+    border-radius: 5px;
+
+    &:hover {
+      color: colors.$GRAYA;
+    }
+
+    &:active {
+      color: colors.$GRAY2;
+    }
+  }
+
+  .updateButton {
+    width: 100px;
+    padding: 5px 25px;
+    color: colors.$GRAYE;
+    background-color: colors.$PRIMARY_BUTTON_BACKGROUND;
+    border-radius: 5px;
+
+    &:hover {
+      color: colors.$GRAYD;
+      background-color: colors.$PRIMARY_BUTTON_HOVER_BACKGROUND;
+    }
+
+    &:active {
+      background-color: colors.$PRIMARY_BUTTON_ACTIVE_BACKGROUND;
+    }
+  }
+}

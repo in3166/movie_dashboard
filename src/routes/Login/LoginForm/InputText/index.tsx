@@ -8,7 +8,6 @@ interface IInputFormProps {
   value: string | number;
   onBlur?: () => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  reset?: () => void;
   hasError?: boolean;
   type: string;
   errorMessage?: string;
@@ -18,12 +17,7 @@ interface IInputFormProps {
 }
 
 const InputText = (props: IInputFormProps) => {
-  const { formTitle, value, onBlur, onChange, reset, hasError, type, errorMessage, inputFocusRef, read, placeholder } =
-    props;
-
-  const handleResetOnclick = () => {
-    if (reset) reset();
-  };
+  const { formTitle, value, onBlur, onChange, hasError, type, errorMessage, inputFocusRef, read, placeholder } = props;
 
   useEffect(() => {
     inputFocusRef?.current?.focus();

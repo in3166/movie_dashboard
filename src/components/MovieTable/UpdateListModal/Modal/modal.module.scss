@@ -1,0 +1,33 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/animation';
+@use '/src/styles/mixins/position';
+
+.backDropButton {
+  position: absolute;
+  cursor: default;
+}
+
+.backDrop {
+  @include position.fixed(0 auto auto 0);
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: colors.$MODAL_BACKDROP_BACKGROUND;
+  opacity: 1;
+  animation: openBackDrop 0.17s linear;
+}
+
+.modal {
+  @include position.fixed(50% auto auto 50%);
+  z-index: 100;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  padding: 15px;
+  line-height: 1.5715;
+  color: colors.$BLACK;
+  background-color: colors.$GRAYE;
+  border-radius: 5px;
+  transform: translate(-50%, -55%);
+  animation: openModal 0.15s linear;
+}

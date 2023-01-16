@@ -4,8 +4,10 @@
 .searchForm {
   display: flex;
   justify-content: space-between;
-  margin: 35px 10px 20px;
-  border: 1px solid #7e7e7e;
+  max-width: 350px;
+  margin: 35px 0 20px;
+  background-color: colors.$WHITE;
+  border: 1px solid #bebebe;
   border-radius: 5px;
 
   .inputWrapper {
@@ -52,6 +54,7 @@
   padding: 10px;
   margin: 0 0 10px;
   overflow: auto;
+  background-color: colors.$WHITE;
   border-radius: 6px;
   box-shadow: 0 0 1px 1px rgba(11, 11, 14, 20%);
 

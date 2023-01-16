@@ -26,8 +26,21 @@ export const getSessionId = (requestToken: string) =>
     `${MOVIE_API_URL}3/authentication/session/convert/4?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&request_token=${requestToken}`
   );
 
-export const getMovieList = (accessToken: string) =>
-  axios.get(`${MOVIE_API_URL}/4/list/8235984?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
+export const addMovieItem = (accessToken: string, id: number, items: { media_type: string; media_id: number }[]) =>
+  axios.post(
+    `${MOVIE_API_URL}/4/list/${id}/items`,
+    {
+      items,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+export const getMovieList = (accessToken: string, id: number) =>
+  axios.get(`${MOVIE_API_URL}/4/list/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
@@ -37,6 +50,35 @@ export const getMovieList = (accessToken: string) =>
       timestamp: new Date().getTime(),
     },
   });
+
+export const deleteMovieItem = (accessToken: string, id: number, items: { media_type: string; media_id: number }[]) =>
+  axios.delete(`${MOVIE_API_URL}/4/list/${id}/items`, {
+    data: {
+      items,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+export const updateMovieItem = (
+  accessToken: string,
+  id: number,
+  items: { media_type: string; media_id: number; comment: string }[]
+) =>
+  axios.put(
+    `${MOVIE_API_URL}/4/list/${id}/items`,
+    {
+      items,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 
 export const getPerson = (id: string) =>
   axios.get(`${MOVIE_API_URL}/3/person/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);

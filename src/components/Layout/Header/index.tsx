@@ -4,29 +4,27 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import store from 'store';
 
-import { setUser } from 'states/user';
+import { setEmail } from 'states/user';
 import styles from './header.module.scss';
 
 const Header = () => {
-  const [userEmail, setuserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   useLayoutEffect(() => {
     const storedEmail = store.get('email');
-    console.log(storedEmail);
     if (!storedEmail || storedEmail === '') {
       navigate('/login');
     }
-
-    const requestToken = store.get('requestToken');
-    setuserEmail(storedEmail);
-    dispatch(setUser({ email: storedEmail, requestToken }));
+    setUserEmail(storedEmail);
+    dispatch(setEmail({ email: storedEmail }));
   }, [dispatch, navigate]);
+
   const navigator = useNavigate();
   const handleLogout = () => {
-    console.log(store.get('accessToken'));
+    store.remove('myListId');
     store.remove('accessToken');
     navigator('/login');
   };

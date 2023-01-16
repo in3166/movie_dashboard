@@ -18,11 +18,11 @@ import { cx } from 'styles';
 import store from 'store';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { getSelectedMovies, setSelectedMovies } from 'states/moives';
-import axios from 'axios';
-import { MOVIE_API_URL } from 'features';
+import { getMovies, getSelectedMovies, setMovies, setSelectedMovies } from 'states/moives';
 import { useLocation } from 'react-router-dom';
 import { columns } from './column';
+import UpdateListModal from './UpdateListModal/UpdateListModal';
+import { deleteMovieItem } from 'services/movies';
 
 type TableProps<T extends object> = {
   filter: string;
@@ -31,9 +31,9 @@ type TableProps<T extends object> = {
 
 const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) => {
   const { rows, filter } = props;
-  console.log(filter);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const dispatch = useAppDispatch();
 
   const handleChangePage = (_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -45,20 +45,20 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
   };
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [selectedPopoverItem, setSelectedPopoverItem] = useState<number | null>(null);
+  const [selectedPopoverItem, setSelectedPopoverItem] = useState<{ id: number; type: string } | null>(null);
   const open = Boolean(anchorEl);
 
-  const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>, id: number) => {
+  const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>, id: number, type: string) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
-    setSelectedPopoverItem(id);
+    setSelectedPopoverItem({ id, type });
   };
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
 
-  const dispatch = useAppDispatch();
   const selectedMovies = useAppSelector(getSelectedMovies);
+  const movies = useAppSelector(getMovies);
 
   const locator = useLocation();
 
@@ -71,30 +71,23 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
       dispatch(setSelectedMovies([...selectedMovies, { media_type: filter, id }]));
     }
   };
-
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const handleClickUpdate = () => {
     handlePopoverClose();
+    setOpenUpdateModal(true);
   };
 
   const handleClickDelete = () => {
     const storedAccessToken = store.get('accessToken');
-    axios
-      .delete(`${MOVIE_API_URL}/4/list/8235984/items`, {
-        data: {
-          items: [{ media_type: 'movie', media_id: selectedPopoverItem }],
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${storedAccessToken}`,
-        },
-      })
-      .then((res) => {
-        handlePopoverClose();
-        // dispatch(setMovies());
-      })
-      .catch((err) => {
-        console.log('err:', err);
-      });
+    const myListId = store.get('myListId');
+    if (!selectedPopoverItem || !storedAccessToken) return;
+
+    deleteMovieItem(storedAccessToken, myListId, [
+      { media_type: selectedPopoverItem.type, media_id: selectedPopoverItem.id },
+    ]).then((response) => {
+      handlePopoverClose();
+      if (response.data.success) dispatch(setMovies(movies.filter((value) => value.id !== selectedPopoverItem.id))); // TODO: 수정, 삭제 분리? => POPOVER
+    });
   };
 
   return (
@@ -137,7 +130,10 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
                 })}
                 {locator.pathname !== '/search' && (
                   <TableCell align='center'>
-                    <button type='button' onClick={(event) => handlePopoverClick(event, row.id)}>
+                    <button
+                      type='button'
+                      onClick={(event) => handlePopoverClick(event, row.id, row?.media_type || filter)}
+                    >
                       <MoreVertIcon fontSize='small' className={styles.rowButton} />
                     </button>
                   </TableCell>
@@ -194,6 +190,7 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
           </button>
         </div>
       </Popover>
+      {openUpdateModal && <UpdateListModal onClose={() => setOpenUpdateModal(false)} item={selectedPopoverItem} />}
     </TableContainer>
   );
 };

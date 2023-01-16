@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { MenuBar } from 'assets/svgs';

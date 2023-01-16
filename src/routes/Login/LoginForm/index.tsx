@@ -1,8 +1,6 @@
 import { useRef, FormEvent } from 'react';
-import { useDispatch } from 'react-redux';
 import store from 'store';
 
-import { setUser } from 'states/user';
 import useFormInput from 'hooks/useFormInput';
 import { getRequestToken } from 'services/movies';
 import { MOVIE_WEB_URL } from 'features';
@@ -12,7 +10,6 @@ import styles from '../login.module.scss';
 
 const LoginForm = () => {
   const inputFocusRef = useRef(null);
-  const dispatch = useDispatch();
   const email = useFormInput({ validateFunction: validateEmail });
   const password = useFormInput({ validateFunction: validatePassword });
 
@@ -20,7 +17,6 @@ const LoginForm = () => {
     e.preventDefault();
 
     if (!email.valueIsValid || !password.valueIsValid) {
-      console.log('invalid');
       return;
     }
 
@@ -28,7 +24,6 @@ const LoginForm = () => {
     store.set('requestToken', data.request_token);
     store.set('email', email.value);
 
-    // dispatch(setUser({ email: email.value, requestToken: data.request_token }));
     window.location.href = `${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`;
   };
 
@@ -39,7 +34,6 @@ const LoginForm = () => {
         formTitle='EMAIL'
         value={email.value}
         onChange={email.valueChangeHandler}
-        reset={email.reset}
         onBlur={email.inputBlurHandler}
         hasError={email.hasError}
         errorMessage='이메일 형식이 맞지 않습니다.'
@@ -52,7 +46,6 @@ const LoginForm = () => {
         formTitle='PASSWORD'
         value={password.value}
         onChange={password.valueChangeHandler}
-        reset={password.reset}
         onBlur={password.inputBlurHandler}
         hasError={password.hasError}
         placeholder='Password'

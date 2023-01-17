@@ -2,16 +2,18 @@
 
 간단한 영화 대시보드 만들기
 
-- [데모 페이지](movies-dashboard.netlify.app)
+- [데모 페이지](http://movies-dashboard.netlify.app)
 
 ## Content
 
 1. [개발 환경](#dev-spec)
-2. [설치 및 실행 방법](#installation)
-3. [Dependencies](#dependencies)
-4. [API 명세](#api-spec)
-5. [과제 요구사항](#requirement)
+2. [Dependencies](#dependencies)
+3. [설치 및 실행 방법](#installation)
+4. [과제 요구사항](#requirement)
+5. [API 명세](#api-spec)
 6. [문제 해결 전략](#solution)
+
+<br/>
 
 <h2 id="dev-spec">
     1. 개발 환경
@@ -19,71 +21,96 @@
 
 #### Front-End
 
-* Angular7
-- Angular Material
-
-#### Back-End
-
-* NodeJS (version >= 8.9 for angular cli)
-- ExpressJS
-- MongoDB
+- `React`
+- `TypeScript`
+- `prettier` + `eslint` + `stylelint`
+- `react-redux`
+- `reduxt-toolkit`
+- `css-module` + `SCSS`
+- `Material UI`
 
 ### 1.1 폴더 구조
 
 ```bash
 ```
 
-<h2 id="installation">
-    2. 설치 및 실행 방법
-</h2>
-
-### Back-End
-
-~~~javascript
-//mongodb 설치(mac을 기준으로 brew로 설치하였습니다. windows 설치 방법과는 다를 수 있음)
-$> brew install mongodb
-
-$> cd calendar-back
-
-//install dependency
-$> npm install
-
-//start server
-$> npm start
-~~~
-
-### Front-End
-
-~~~javascript
-//angular cli 설치 (Node >= 8.9 필요)
-$> npm install -g @angular/cli
-
-$> cd calendar-front
-
-//install dependency
-$> npm install
-
-//dev server 실행. `http://localhost:4200/`으로 접속
-$> ng serve
-~~~
+<br/>
 
 <h2 id="dependencies">
-    3.Dependencies
+    2.Dependencies
 </h2>
 
 |  Dependency  | version |
 |--------------|---------|
-| Angular    |   7.0.2   |
+| React    |   18.2.0   |
+| react-dom    |   18.2.0   |
+| react-router-dom    |   6.6.2   |
+| react-redux    |   8.0.5   |
+| @reduxjs/toolkit    |   1.9.1   |
+| react-error-boundary    |   3.1.4   |
+| store    |   18.2.0   |
+| axios    |   1.2.2   |
+| classnames    |   2.3.2   |
+| @mui/material    |   5.11.4   |
+| @mui/icons-material    |   5.11.0   |
+| @emotion/styled    |   11.10.5   |
+| @emotion/react    |   11.10.5   |
 
-<h2 id="api-spec">
-    4. API 명세
+<br>
+
+<h2 id="installation">
+    3. 설치 및 실행 방법
 </h2>
 
+- Git clone
+- yarn install
+- `.env` 설정
+- yarn start
+- `http://localhost:3000/`으로 접속
+
+```bash
+$> git clone https://github.com/in3166/movie_dashboard.git
+
+$> cd ./movie_dashboard
+
+//install dependency
+$> yarn install
+
+// .env 설정
+
+$> yarn start
+```
+<br/>
 
 <h2 id="requirement">
-    5. 과제 요구사항
+    4. 과제 요구사항
 </h2>
 
+### 1. 로그인 페이지
+
+- 인증 정보: `access_token`, `session_id`
+- 이메일, 비밀번호를 입력하여 로그인
+  - 이메일, 비밀번호 Validation 추가
+- 탭 내 로그인 유지
+
+### 2. Movie 목록 조회
+
+- 목록 리스트 조회
+- 목록에 항목 추가
+- 목록 항목 수정
+- 목록 항목 삭제
+
+### 3. 검색 페이지
+
+- 검색 필터: `movie`, `people`, `tv`
+
+<br/>
+
+<h2 id="api-spec">
+    5. API 명세
+</h2>
+
+<br/>
 
 <h2 id="solution">
     6. 문제 해결 전략

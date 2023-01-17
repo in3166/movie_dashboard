@@ -1,23 +1,22 @@
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import store from 'store';
 
 import { IPersonItem } from 'types/item';
+import { useAppSelector, useAppDispatch } from 'hooks';
+import { getSelectedMovies, setSelectedMovies } from 'states/moives';
 import { IMAGE_BASE_URL } from 'features';
 import { addMovieItem } from 'services/movieAPI';
-import { useAppSelector } from 'hooks/useAppSelector';
-import { getSelectedMovies, setSelectedMovies } from 'states/moives';
 import MovieTable from 'components/MovieTable';
+import Container from 'components/Container';
 import SearchBar from './SearchBar';
 import defaultPerson from 'assets/svgs/defaultPerson.png';
 import styles from './search.module.scss';
-import Container from 'components/Container';
 
 const Search = (): JSX.Element => {
   const [items, setItems] = useState([]);
   const [filter, setFilter] = useState('movie');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [selectedPerson, setSelectedPerson] = useState([]);
   const handleClickPerson = (person: IPersonItem) => {

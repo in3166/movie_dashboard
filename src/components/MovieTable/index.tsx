@@ -95,7 +95,7 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
                 onClick={() => handleClickRow(row.id)}
                 className={cx({
                   [styles.row]: true,
-                  [styles.selectedRow]: selectedMovies.some((value) => value.id === row.id), // TODO: 여기서 체크?
+                  [styles.selectedRow]: selectedMovies.some((value) => value.id === row.id),
                 })}
               >
                 {Object.keys(columns[row?.media_type || filter]).map((key) => {

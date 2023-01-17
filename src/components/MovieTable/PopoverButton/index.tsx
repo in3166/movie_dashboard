@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import store from 'store';
 import { Popover } from '@mui/material';
+
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { getMovies, setMovies } from 'states/moives';
 import { deleteMovieItem } from 'services/movieAPI';
@@ -34,7 +35,7 @@ const PopoverButoon = ({ anchorEl, setAnchorEl, setOpenUpdateModal, selectedItem
 
     deleteMovieItem(storedAccessToken, myListId, [{ media_type: selectedItem.type, media_id: selectedItem.id }]).then(
       (response) => {
-        if (response.data.success) dispatch(setMovies(movies.filter((value) => value.id !== selectedItem.id))); // TODO: 수정, 삭제 분리? => POPOVER
+        if (response.data.success) dispatch(setMovies(movies.filter((value) => value.id !== selectedItem.id)));
       }
     );
   };

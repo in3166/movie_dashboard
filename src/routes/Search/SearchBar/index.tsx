@@ -1,5 +1,5 @@
 import { useState, FormEvent, useCallback, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'hooks';
 import { searchRequest } from 'services/movieAPI';
 import { setSelectedMovies } from 'states/moives';
 import styles from '../search.module.scss';
@@ -22,7 +22,7 @@ const SearchBar = ({ setItems, setFilter }: ISearchBar) => {
     setSelectFilterValue(value);
   }, []);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleSearchSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { data } = await searchRequest[selectFilterValue](searchText);

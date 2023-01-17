@@ -1,11 +1,11 @@
-@use '/src/styles/mixins/responsive';
 @use '/src/styles/constants/colors';
+@use '/src/styles/mixins/responsive';
 
 .container {
   position: relative;
   padding: 30px;
   margin-top: 35px;
-  border: 1px solid rgb(204, 204, 204);
+  border: 1px solid colors.$GRAYD;
   border-radius: 10px;
   @include responsive.mobileOnly {
     width: 100% !important;
@@ -26,9 +26,9 @@
 }
 
 .white {
-  background-color: #ffffff;
+  background-color: colors.$WHITE;
 }
 
 .gray {
-  background-color: #f0eded;
+  background-color: colors.$GRAYE;
 }

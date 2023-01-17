@@ -1,26 +1,28 @@
-import { useLayoutEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import store from 'store';
 
-import { setEmail } from 'states/user';
+import { getEmail, setEmail } from 'states/user';
 import styles from './header.module.scss';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
 const Header = () => {
-  const [userEmail, setUserEmail] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const email = useAppSelector(getEmail);
   const navigate = useNavigate();
   const location = useLocation();
 
-  useLayoutEffect(() => {
-    const storedEmail = store.get('email');
-    if (!storedEmail || storedEmail === '') {
-      navigate('/login');
+  useEffect(() => {
+    if (!email || email === '') {
+      const storedEmail = store.get('email');
+      if (!storedEmail) {
+        navigate('/login');
+      } else {
+        dispatch(setEmail({ email: storedEmail }));
+      }
     }
-    setUserEmail(storedEmail);
-    dispatch(setEmail({ email: storedEmail }));
-  }, [dispatch, navigate]);
+  }, [dispatch, email, navigate]);
 
   const navigator = useNavigate();
   const handleLogout = () => {
@@ -33,7 +35,7 @@ const Header = () => {
     <header className={styles.header}>
       <h2>{location.pathname === '/' ? 'Movie 목록 조회' : '검색'}</h2>
       <div className={styles.userInfo}>
-        {userEmail}
+        {email}
         <button type='button' onClick={handleLogout}>
           <AccountCircleIcon />
         </button>

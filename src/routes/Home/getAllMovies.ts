@@ -15,12 +15,12 @@ export const getAllMovies = async (myListId: number) => {
   allComments = { ...comments };
   allMovies.push(...results);
 
-  const getPromises = [];
+  const getNextPagePromises = [];
   for (let i = 2; i <= totalPage; i += 1) {
-    getPromises.push(getMovieList(storedAccessToken, myListId, i));
+    getNextPagePromises.push(getMovieList(storedAccessToken, myListId, i));
   }
 
-  const responseAll = await Promise.all(getPromises);
+  const responseAll = await Promise.all(getNextPagePromises);
   responseAll.forEach((res) => {
     const { comments: restComments, results: restResults } = res.data;
     allComments = { ...allComments, ...restComments };

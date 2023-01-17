@@ -15,19 +15,22 @@ interface IUpdateListModalProps {
 
 const UpdateListModal = ({ onClose, item }: IUpdateListModalProps) => {
   const dispatch = useAppDispatch();
+
   const comments = useAppSelector(getComments);
   const { comment, id, type } = comments.filter((value) => value.id === item.id)[0];
+
   const [inputComment, setInputComment] = useState(comment ?? '');
 
   const handleClickUpdate = async () => {
     const storedAccessToken = store.get('accessToken');
     const myListId = store.get('myListId');
     if (!storedAccessToken) return;
+
     updateMovieItem(storedAccessToken, myListId, [{ media_type: type, media_id: id, comment: inputComment }])
       .then((response) => {
         if (response.data.success) {
           const tempComments = comments.filter((value) => value.id !== item.id);
-          dispatch(setComments([...tempComments, { comment: inputComment, id, type }])); // TODO: 수정, 삭제 분리? => POPOVER
+          dispatch(setComments([...tempComments, { comment: inputComment, id, type }]));
         }
       })
       .finally(() => {

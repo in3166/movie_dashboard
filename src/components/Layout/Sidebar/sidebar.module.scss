@@ -5,10 +5,9 @@
   z-index: 2;
   min-height: 100vh;
   overflow: auto;
-  color: colors.$SIDE_FONT_COLOR;
   text-align: center;
   background-color: colors.$SIDE_BACKGROUND_COLOR;
-  box-shadow: 0 0 10px 0 rgba(139, 139, 139, 58.9%);
+  box-shadow: 0 0 10px 0 colors.$GRAY6;
 
   .logo {
     display: flex;
@@ -16,7 +15,6 @@
     width: 100%;
     margin: 7px 0;
     font-size: 19px;
-    color: colors.$SIDE_FONT_COLOR;
 
     .logoImage {
       width: 25px;

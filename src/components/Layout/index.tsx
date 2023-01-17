@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+
 import Sidebar from './Sidebar';
 import ErrorFallback from './ErrorFallback';
 import Header from './Header';

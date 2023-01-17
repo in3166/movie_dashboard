@@ -41,3 +41,4 @@ export const { setUser, setEmail } = userSlice.actions;
 export default userSlice.reducer;
 
 export const getUser = (state: RootState): UserState => state.user;
+export const getEmail = (state: RootState): string => state.user.email;

@@ -25,7 +25,7 @@
     cursor: pointer;
 
     path {
-      fill: rgb(109, 109, 109);
+      fill: colors.$GRAY6;
     }
 
     &:hover {
@@ -48,18 +48,6 @@
 
   .readOnlyInput {
     background-color: colors.$GRAYE;
-  }
-
-  :root[color-theme='dark'] & {
-    .formTitle {
-      margin-bottom: 5px;
-    }
-
-    svg {
-      path {
-        fill: rgb(165, 165, 165);
-      }
-    }
   }
 }
 

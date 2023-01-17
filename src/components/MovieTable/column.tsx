@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import { IMAGE_BASE_URL } from 'features';
 import { IMovieItem, ITvItem } from 'types/item';
-import styles from 'components/MovieTable/table.module.scss';
+import LazyImage from './LazyImage';
 import defaultMovie from 'assets/svgs/defaultMovie.png';
 import defaultTv from 'assets/svgs/defaultTv.png';
-import LazyImage from './LazyImage';
+import styles from './table.module.scss';
 
 export const columns: {
   [key: string]: Record<
@@ -24,10 +24,9 @@ export const columns: {
         const imgSrc = !payload.poster_path ? defaultMovie : `${IMAGE_BASE_URL}/${payload.poster_path}`;
 
         return (
-          <div className={styles.title}>
+          <div className={styles.titleWapper}>
             <LazyImage src={imgSrc} />
-            {/* <img className={styles.poster} src={imgSrc} alt='movie poster' /> */}
-            {payload.title}
+            <p className={styles.title}>{payload.title}</p>
           </div>
         );
       },
@@ -55,9 +54,9 @@ export const columns: {
       accessor: (payload: ITvItem) => {
         const imgSrc = !payload.poster_path ? defaultTv : `${IMAGE_BASE_URL}/${payload.poster_path}`;
         return (
-          <div className={styles.title}>
-            <img className={styles.poster} src={imgSrc} alt='tv poster' />
-            {payload.name}
+          <div className={styles.titleWapper}>
+            <LazyImage src={imgSrc} />
+            <p className={styles.title}>{payload.name}</p>
           </div>
         );
       },

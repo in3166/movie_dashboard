@@ -13,6 +13,7 @@ interface IComments {
   type: string;
   comment: string;
 }
+
 export interface MoviesState {
   currentMovies: IMovieItem[];
   selectedMovies: ISelectedMovies[];

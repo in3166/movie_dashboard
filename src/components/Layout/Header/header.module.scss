@@ -22,6 +22,10 @@
 
     svg {
       color: rgb(110, 110, 110);
+
+      &:hover {
+        color: rgb(73, 73, 73);
+      }
     }
   }
 }

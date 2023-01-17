@@ -11,19 +11,31 @@ const apiClient = axios.create({
   },
 });
 
-export const getRequestToken = () =>
-  apiClient.post('/4/auth/request_token', {
-    redirect_to: process.env.REACT_APP_BASE_URL,
-  });
+export const getRequestToken = () => apiClient.post('/4/auth/request_token');
 
 export const getAccessToken = (requestToken: string) =>
   apiClient.post(`${MOVIE_API_URL}/4/auth/access_token`, {
     request_token: requestToken,
   });
 
-export const getSessionId = (requestToken: string) =>
-  axios.get(
-    `${MOVIE_API_URL}3/authentication/session/convert/4?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&request_token=${requestToken}`
+export const getSessionId = (accessToken: string) =>
+  axios.post(`${MOVIE_API_URL}/3/authentication/session/convert/4?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
+    access_token: accessToken,
+  });
+
+export const createMyList = (accessToken: string) =>
+  axios.post(
+    `${MOVIE_API_URL}/4/list`,
+    {
+      name: `My List-${new Date().getTime()}`,
+      iso_639_1: 'en',
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );
 
 export const addMovieItem = (accessToken: string, id: number, items: { media_type: string; media_id: number }[]) =>
@@ -39,6 +51,7 @@ export const addMovieItem = (accessToken: string, id: number, items: { media_typ
       },
     }
   );
+
 export const getMovieList = (accessToken: string, id: number) =>
   axios.get(`${MOVIE_API_URL}/4/list/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
     headers: {

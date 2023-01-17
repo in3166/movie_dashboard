@@ -1,14 +1,14 @@
-import { useRef, FormEvent } from 'react';
+import { useRef, FormEvent, Dispatch, SetStateAction } from 'react';
 import store from 'store';
 
-import useFormInput from 'hooks/useFormInput';
+import { useFormInput } from 'hooks';
 import { getRequestToken } from 'services/movieAPI';
 import { MOVIE_WEB_URL } from 'features';
 import { validateEmail, validatePassword } from 'utils/validateInput';
 import InputText from './InputText/index';
 import styles from '../login.module.scss';
 
-const LoginForm = () => {
+const LoginForm = ({ setRequestToken }: { setRequestToken: Dispatch<SetStateAction<string | null>> }) => {
   const inputFocusRef = useRef(null);
   const email = useFormInput({ validateFunction: validateEmail });
   const password = useFormInput({ validateFunction: validatePassword });
@@ -23,8 +23,9 @@ const LoginForm = () => {
     const { data } = await getRequestToken();
     store.set('requestToken', data.request_token);
     store.set('email', email.value);
-
-    window.location.href = `${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`;
+    window.open(`${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`);
+    setRequestToken(data.request_token);
+    // window.location.href = `${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`;
   };
 
   return (

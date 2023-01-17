@@ -5,7 +5,7 @@ interface IUseFormInputProps {
   initialValue?: string;
 }
 
-const useFormInput = ({ validateFunction, initialValue = '' }: IUseFormInputProps) => {
+export const useFormInput = ({ validateFunction, initialValue = '' }: IUseFormInputProps) => {
   const [value, setValue] = useState(initialValue);
   const [isTouched, setIsTouched] = useState(false);
 
@@ -44,5 +44,3 @@ const useFormInput = ({ validateFunction, initialValue = '' }: IUseFormInputProp
     reset,
   };
 };
-
-export default useFormInput;

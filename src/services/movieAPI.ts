@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MOVIE_API_URL } from 'features';
+import { MOVIE_API_URL } from 'constant';
 
 const apiClient = axios.create({
   baseURL: MOVIE_API_URL,

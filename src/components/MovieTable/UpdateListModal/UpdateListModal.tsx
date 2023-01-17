@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Dispatch } from 'react';
 import store from 'store';
 
 import { useAppSelector } from 'hooks/useAppSelector';
@@ -11,9 +11,11 @@ import styles from './updateListModal.module.scss';
 interface IUpdateListModalProps {
   onClose: () => void;
   item: any;
+  setSnackBarStatus: Dispatch<React.SetStateAction<string>>;
+  setMessage: (text: string) => void;
 }
 
-const UpdateListModal = ({ onClose, item }: IUpdateListModalProps) => {
+const UpdateListModal = ({ onClose, item, setSnackBarStatus, setMessage }: IUpdateListModalProps) => {
   const dispatch = useAppDispatch();
 
   const comments = useAppSelector(getComments);
@@ -31,7 +33,13 @@ const UpdateListModal = ({ onClose, item }: IUpdateListModalProps) => {
         if (response.data.success) {
           const tempComments = comments.filter((value) => value.id !== item.id);
           dispatch(setComments([...tempComments, { comment: inputComment, id, type }]));
+          setSnackBarStatus('');
+          setMessage('Comment를 수정하였습니다.');
         }
+      })
+      .catch(() => {
+        setSnackBarStatus('error');
+        setMessage('Comment 수정을 실패하였습니다.');
       })
       .finally(() => {
         onClose();

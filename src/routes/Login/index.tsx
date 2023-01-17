@@ -31,7 +31,6 @@ const Login = (): JSX.Element => {
         return;
       }
     }
-    alert('접속을 실패하였습니다.');
     setRequestToken(null);
   };
 

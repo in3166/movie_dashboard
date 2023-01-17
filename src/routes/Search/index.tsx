@@ -4,19 +4,22 @@ import store from 'store';
 import { IPersonItem } from 'types/item';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { getSelectedMovies, setSelectedMovies } from 'states/moives';
-import { IMAGE_BASE_URL } from 'features';
 import { addMovieItem } from 'services/movieAPI';
 import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
 import SearchBar from './SearchBar';
+import { IMAGE_BASE_URL } from 'constant';
 import defaultPerson from 'assets/svgs/defaultPerson.png';
 import styles from './search.module.scss';
+import { useSnackbar } from 'components/SnackBar/useSnackBar';
+import SnackBar from 'components/SnackBar';
 
 const Search = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const [items, setItems] = useState([]);
   const [filter, setFilter] = useState('movie');
-
-  const dispatch = useAppDispatch();
+  const { message, setMessage } = useSnackbar(3000);
+  const [snackBarStatus, setSnackBarStatus] = useState('');
 
   const [selectedPerson, setSelectedPerson] = useState([]);
   const handleClickPerson = (person: IPersonItem) => {
@@ -34,9 +37,16 @@ const Search = (): JSX.Element => {
     const myListId = store.get('myListId');
 
     addMovieItem(storedAccessToken, myListId, selectedItems).then((response) => {
-      if (response.data.success) dispatch(setSelectedMovies([]));
+      if (response.data.success) {
+        dispatch(setSelectedMovies([]));
+        setSnackBarStatus('');
+        setMessage(`아이템을 추가하였습니다.`);
+      } else {
+        setSnackBarStatus('error');
+        setMessage(`아이템 추가를 실패하였습니다.`);
+      }
     });
-  }, [dispatch, selectedMovies]);
+  }, [dispatch, selectedMovies, setMessage]);
 
   return (
     <>
@@ -91,6 +101,7 @@ const Search = (): JSX.Element => {
           추가
         </button>
       </div>
+      {message && <SnackBar message={message} setMessage={setMessage} status={snackBarStatus} />}
     </>
   );
 };

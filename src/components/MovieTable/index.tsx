@@ -20,6 +20,8 @@ import TablePaginationActions from './TablePaginationActions';
 import PopoverButoon from './PopoverButton';
 import { cx } from 'styles';
 import styles from './table.module.scss';
+import { useSnackbar } from 'components/SnackBar/useSnackBar';
+import SnackBar from 'components/SnackBar';
 
 type TableProps<T extends object> = {
   filter: string;
@@ -28,9 +30,12 @@ type TableProps<T extends object> = {
 
 const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) => {
   const { rows, filter } = props;
+  const dispatch = useAppDispatch();
+  const { message, setMessage } = useSnackbar(3000);
+  const [snackBarStatus, setSnackBarStatus] = useState('');
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const dispatch = useAppDispatch();
 
   const handleChangePage = useCallback((_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -153,8 +158,18 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
         setAnchorEl={setPopoverAnchorEl}
         setOpenUpdateModal={setOpenUpdateModal}
         selectedItem={selectedPopoverItem}
+        setSnackBarStatus={setSnackBarStatus}
+        setMessage={setMessage}
       />
-      {openUpdateModal && <UpdateListModal onClose={handleOnCloseModal} item={selectedPopoverItem} />}
+      {openUpdateModal && (
+        <UpdateListModal
+          onClose={handleOnCloseModal}
+          item={selectedPopoverItem}
+          setSnackBarStatus={setSnackBarStatus}
+          setMessage={setMessage}
+        />
+      )}
+      {message && <SnackBar message={message} setMessage={setMessage} status={snackBarStatus} />}
     </TableContainer>
   );
 };

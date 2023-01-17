@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { IMAGE_BASE_URL } from 'features';
 import { IMovieItem, ITvItem } from 'types/item';
+import { IMAGE_BASE_URL } from 'constant';
 import LazyImage from './LazyImage';
 import defaultMovie from 'assets/svgs/defaultMovie.png';
 import defaultTv from 'assets/svgs/defaultTv.png';

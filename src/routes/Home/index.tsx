@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { IMovieItem } from 'types/item';
-import { setComments } from 'states/moives';
-import { useAppDispatch, useGetMyList } from 'hooks';
+import { getMovies, setComments, setMovies } from 'states/moives';
+import { useAppDispatch, useAppSelector, useGetMyList } from 'hooks';
 import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
 import Loading from 'components/Loading';
 import { getAllMovies } from './getAllMovies';
 
 const Home = (): JSX.Element => {
-  const [movieList, setMovieList] = useState<IMovieItem[]>([]);
+  const movieList = useAppSelector(getMovies);
   const [loading, setLoading] = useState(true);
   const { myListId } = useGetMyList();
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const Home = (): JSX.Element => {
       getAllMovies(myListId).then((response) => {
         const { allMovies, comments } = response;
         dispatch(setComments(comments));
-        setMovieList(allMovies);
+        dispatch(setMovies(allMovies));
         setLoading(false);
       });
     }

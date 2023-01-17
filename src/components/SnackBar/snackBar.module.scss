@@ -1,0 +1,51 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/mixins/animation';
+
+.snackBar {
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 220px;
+  max-width: 450px;
+  padding: 7px 27px 7px 15px;
+  font-size: 15px;
+  color: colors.$WHITE;
+  letter-spacing: 1px;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  background-color: #529b55;
+  border-radius: 0.3px;
+  border-radius: 5px;
+  animation: moveRight 0.3s;
+
+  button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    height: auto;
+    margin-left: 10px;
+
+    svg {
+      width: 15px;
+      height: 100%;
+
+      path {
+        fill: colors.$WHITE;
+      }
+    }
+  }
+}
+
+.warning {
+  background-color: #f68a1c !important;
+}
+
+.error {
+  background-color: #d84646 !important;
+}

@@ -3,7 +3,7 @@ import store from 'store';
 
 import { useFormInput } from 'hooks';
 import { getRequestToken } from 'services/movieAPI';
-import { MOVIE_WEB_URL } from 'features';
+import { MOVIE_WEB_URL } from 'constant';
 import InputText from './InputText/index';
 import { isNotRecommendPassword, validateEmail, validatePassword } from './validateInput';
 import styles from '../login.module.scss';

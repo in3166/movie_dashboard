@@ -12,9 +12,19 @@ interface IPopoverButoonProps {
   setAnchorEl: Dispatch<SetStateAction<HTMLButtonElement | null>>;
   setOpenUpdateModal: Dispatch<React.SetStateAction<boolean>>;
   selectedItem: { id: number; type: string } | null;
+  setSnackBarStatus: Dispatch<React.SetStateAction<string>>;
+  setMessage: (text: string) => void;
 }
-const PopoverButoon = ({ anchorEl, setAnchorEl, setOpenUpdateModal, selectedItem }: IPopoverButoonProps) => {
+const PopoverButoon = ({
+  anchorEl,
+  setAnchorEl,
+  setOpenUpdateModal,
+  selectedItem,
+  setSnackBarStatus,
+  setMessage,
+}: IPopoverButoonProps) => {
   const dispatch = useAppDispatch();
+
   const movies = useAppSelector(getMovies);
   const open = Boolean(anchorEl);
 
@@ -33,11 +43,18 @@ const PopoverButoon = ({ anchorEl, setAnchorEl, setOpenUpdateModal, selectedItem
     const myListId = store.get('myListId');
     if (!selectedItem || !storedAccessToken) return;
 
-    deleteMovieItem(storedAccessToken, myListId, [{ media_type: selectedItem.type, media_id: selectedItem.id }]).then(
-      (response) => {
-        if (response.data.success) dispatch(setMovies(movies.filter((value) => value.id !== selectedItem.id)));
-      }
-    );
+    deleteMovieItem(storedAccessToken, myListId, [{ media_type: selectedItem.type, media_id: selectedItem.id }])
+      .then((response) => {
+        if (response.data.success) {
+          dispatch(setMovies(movies.filter((value) => value.id !== selectedItem.id)));
+          setSnackBarStatus('');
+          setMessage(`아이템을 제거하였습니다.`);
+        }
+      })
+      .catch(() => {
+        setSnackBarStatus('error');
+        setMessage(`아이템 제거를 실패하였습니다.`);
+      });
   };
 
   return (

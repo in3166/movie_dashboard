@@ -44,19 +44,6 @@ th {
   }
 }
 
-.popButton {
-  width: 50px;
-  height: 30px;
-
-  &:hover {
-    background-color: colors.$GRAYE;
-  }
-
-  &:active {
-    background-color: colors.$GRAYD;
-  }
-}
-
 .linkTr {
   cursor: pointer;
 }

@@ -1,9 +1,9 @@
 @use '/src/styles/constants/colors';
 @use '/src/styles/mixins/animation';
-@use '/src/styles/mixins/flexbox';
 
 .header {
-  @include flexbox.flexbox(between, center);
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
   margin-bottom: 10px;
   font-size: 14px;
@@ -21,11 +21,12 @@
 }
 
 .footer {
-  @include flexbox.flexbox(end);
+  display: flex;
+  justify-content: end;
   width: 100%;
 
   button {
-    height: 44px;
+    height: 37px;
     font-size: 15px;
   }
 

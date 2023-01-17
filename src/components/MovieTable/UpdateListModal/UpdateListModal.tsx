@@ -17,7 +17,7 @@ const UpdateListModal = ({ onClose, item }: IUpdateListModalProps) => {
   const dispatch = useAppDispatch();
   const comments = useAppSelector(getComments);
   const { comment, id, type } = comments.filter((value) => value.id === item.id)[0];
-  const [inputComment, setInputComment] = useState(comment);
+  const [inputComment, setInputComment] = useState(comment ?? '');
 
   const handleClickUpdate = async () => {
     const storedAccessToken = store.get('accessToken');

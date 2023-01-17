@@ -4,6 +4,7 @@ import Home from './Home';
 import Login from './Login';
 import Search from './Search';
 import styles from './routes.module.scss';
+import NotFound from './NotFound';
 
 const App = () => {
   return (
@@ -14,7 +15,7 @@ const App = () => {
           <Route path='/search' element={<Search />} />
         </Route>
         <Route path='/login' element={<Login />} />
-        <Route path='*' element={<div>404</div>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   );

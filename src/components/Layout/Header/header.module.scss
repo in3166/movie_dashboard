@@ -1,5 +1,8 @@
+@use '/src/styles/mixins/responsive';
+
 .header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 100%;
   font-size: 20px;
@@ -9,11 +12,23 @@
     display: flex;
     align-items: center;
     font-size: 13px;
+    color: rgb(110, 110, 110);
 
     button {
       display: flex;
       align-items: center;
       margin-left: 3px;
     }
+
+    svg {
+      color: rgb(110, 110, 110);
+    }
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
   }
 }

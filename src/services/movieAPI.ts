@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MOVIE_API_URL, BASE_URL } from 'features';
+import { MOVIE_API_URL } from 'features';
 
 const apiClient = axios.create({
   baseURL: MOVIE_API_URL,
@@ -13,7 +13,7 @@ const apiClient = axios.create({
 
 export const getRequestToken = () =>
   apiClient.post('/4/auth/request_token', {
-    redirect_to: BASE_URL,
+    redirect_to: process.env.REACT_APP_BASE_URL,
   });
 
 export const getAccessToken = (requestToken: string) =>

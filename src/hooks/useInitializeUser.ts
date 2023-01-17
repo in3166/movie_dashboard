@@ -5,10 +5,8 @@ import store from 'store';
 
 import { MOVIE_API_URL } from 'features';
 import { getAccessToken } from 'services/movieAPI';
-import { useAppDispatch } from './useAppDispatch';
 
 export const useInitializeUser = () => {
-  const dispatch = useAppDispatch();
   const navigator = useNavigate();
   const [accessToken, setAccessToken] = useState('');
   const [myListId, setMyListId] = useState<number>();
@@ -61,7 +59,7 @@ export const useInitializeUser = () => {
     const requestToken = store.get('requestToken');
     if (!requestToken) navigator('/login');
     getMyList(requestToken);
-  }, [dispatch, getMyList, navigator]);
+  }, [getMyList, navigator]);
 
   return { accessToken, myListId };
 };

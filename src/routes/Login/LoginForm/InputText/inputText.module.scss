@@ -1,9 +1,7 @@
 @use '/src/styles/constants/colors';
-@use '/src/styles/mixins/flexbox';
-@use '/src/styles/mixins/position';
 
 .inputForm {
-  @include position.position(relative, null);
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 35px 0 20px;
@@ -19,7 +17,9 @@
   }
 
   svg {
-    @include position.position(absolute, 30px -17px auto auto);
+    position: absolute;
+    top: 30px;
+    right: -17px;
     block-size: 12px;
     width: fit-content;
     cursor: pointer;

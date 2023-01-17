@@ -1,3 +1,5 @@
+@use '/src/styles/mixins/responsive';
+
 .main {
   display: flex;
   flex-direction: column;
@@ -6,4 +8,7 @@
   padding: 30px;
   overflow-x: hidden;
   overflow-y: auto;
+  @include responsive.mobileOnly {
+    padding: 10px;
+  }
 }

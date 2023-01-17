@@ -87,7 +87,7 @@
 }
 
 @mixin mobileOnly() {
-  @media only screen and (max-width: getMaxBreakpoint(SD)) {
+  @media only screen and (max-width: getMaxBreakpoint(ML)) {
     @content;
   }
 }

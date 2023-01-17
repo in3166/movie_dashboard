@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+
 import { MenuBar } from 'assets/svgs';
 import logoImg from 'assets/svgs/logo.png';
 import { cx } from 'styles';
@@ -14,11 +15,31 @@ const Sidebar = (): JSX.Element => {
     setVisibleSideBar((prev) => !prev);
   };
 
+  const timer = useRef<number | NodeJS.Timeout | undefined>(undefined);
+  const handleResize = useCallback(() => {
+    if (timer) {
+      clearTimeout(timer.current);
+    }
+    timer.current = setTimeout(() => {
+      setVisibleSideBar(window.innerWidth > 768);
+      timer.current = undefined;
+    }, 140);
+  }, []);
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.innerWidth < 766) {
       setVisibleSideBar(false);
     }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer.current);
+    };
+  }, [handleResize]);
+
   return (
     <aside
       className={cx(styles.aside, { [styles.hideSidebar]: !visibleSideBar }, { [styles.openSidebar]: visibleSideBar })}

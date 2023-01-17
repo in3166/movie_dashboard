@@ -8,7 +8,12 @@ import InputText from './InputText/index';
 import { isNotRecommendPassword, validateEmail, validatePassword } from './validateInput';
 import styles from '../login.module.scss';
 
-const LoginForm = ({ setRequestToken }: { setRequestToken: Dispatch<SetStateAction<string | null>> }) => {
+interface ILoginFormProps {
+  setRequestToken: Dispatch<SetStateAction<string | null>>;
+  setSnackBarStatus: Dispatch<React.SetStateAction<string>>;
+  setMessage: (text: string) => void;
+}
+const LoginForm = ({ setRequestToken, setSnackBarStatus, setMessage }: ILoginFormProps) => {
   const inputFocusRef = useRef(null);
 
   const email = useFormInput({ validateFunction: validateEmail });
@@ -21,6 +26,8 @@ const LoginForm = ({ setRequestToken }: { setRequestToken: Dispatch<SetStateActi
 
     if (!email.valueIsValid || !password.valueIsValid) {
       password.inputBlurHandler();
+      setSnackBarStatus('warning');
+      setMessage(`입력값을 확인해주세요.`);
       return;
     }
 
@@ -58,10 +65,10 @@ const LoginForm = ({ setRequestToken }: { setRequestToken: Dispatch<SetStateActi
       />
 
       {notRecommendPassword.repeatedNumbers && (
-        <p className={styles.notRecommendPW}>연속적인 숫자는 3개 이하만 사용해 주세요.</p>
+        <p className={styles.notRecommendPw}>연속적인 숫자는 3개 이하만 사용해 주세요.</p>
       )}
-      {notRecommendPassword.phoneType && <p className={styles.notRecommendPW}>전화번호 사용은 지양해주세요.</p>}
-      {notRecommendPassword.birthType && <p className={styles.notRecommendPW}>생년월일의 사용은 지양해주세요.</p>}
+      {notRecommendPassword.phoneType && <p className={styles.notRecommendPw}>전화번호 사용은 지양해주세요.</p>}
+      {notRecommendPassword.birthType && <p className={styles.notRecommendPw}>생년월일의 사용은 지양해주세요.</p>}
 
       <button type='submit' className={styles.loginButton}>
         Log In

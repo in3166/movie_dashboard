@@ -7,9 +7,13 @@ import LoginForm from './LoginForm';
 import logoImg from 'assets/svgs/logo.png';
 import { cx } from 'styles';
 import styles from './login.module.scss';
+import { useSnackbar } from 'components/SnackBar/useSnackBar';
+import SnackBar from 'components/SnackBar';
 
 const Login = (): JSX.Element => {
   const navigator = useNavigate();
+  const { message, setMessage } = useSnackbar(3000);
+  const [snackBarStatus, setSnackBarStatus] = useState('');
   const [requestToken, setRequestToken] = useState<string | null>(null);
 
   const createUserSessionId = async () => {
@@ -31,6 +35,8 @@ const Login = (): JSX.Element => {
         return;
       }
     }
+    setSnackBarStatus('error');
+    setMessage(`페이지 접속에 실패하였습니다.`);
     setRequestToken(null);
   };
 
@@ -42,13 +48,16 @@ const Login = (): JSX.Element => {
           <h3 className={styles.id}>로그인</h3>
         </header>
 
-        {!requestToken && <LoginForm setRequestToken={setRequestToken} />}
+        {!requestToken && (
+          <LoginForm setRequestToken={setRequestToken} setSnackBarStatus={setSnackBarStatus} setMessage={setMessage} />
+        )}
         {requestToken && (
           <button type='button' onClick={createUserSessionId} className={cx(styles.loginButton, styles.connectButton)}>
             접속
           </button>
         )}
       </section>
+      {message && <SnackBar message={message} setMessage={setMessage} status={snackBarStatus} />}
     </main>
   );
 };

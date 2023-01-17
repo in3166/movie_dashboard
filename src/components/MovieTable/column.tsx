@@ -4,6 +4,7 @@ import { IMovieItem, ITvItem } from 'types/item';
 import styles from 'components/MovieTable/table.module.scss';
 import defaultMovie from 'assets/svgs/defaultMovie.png';
 import defaultTv from 'assets/svgs/defaultTv.png';
+import LazyImage from './LazyImage';
 
 export const columns: {
   [key: string]: Record<
@@ -24,7 +25,8 @@ export const columns: {
 
         return (
           <div className={styles.title}>
-            <img className={styles.poster} src={imgSrc} alt='movie poster' />
+            <LazyImage src={imgSrc} />
+            {/* <img className={styles.poster} src={imgSrc} alt='movie poster' /> */}
             {payload.title}
           </div>
         );

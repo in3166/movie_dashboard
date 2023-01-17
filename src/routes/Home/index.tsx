@@ -1,36 +1,34 @@
-import { useEffect } from 'react';
-import store from 'store';
+import { useEffect, useState } from 'react';
 
 import { IMovieItem } from 'types/item';
-import { getMovieList } from 'services/movieAPI';
+import { setComments } from 'states/moives';
+import { useAppDispatch, useGetMyList } from 'hooks';
 import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
-import { getMovies, setComments, setMovies } from 'states/moives';
-import { useAppSelector, useAppDispatch, useGetMyList } from 'hooks';
+import Loading from 'components/Loading';
+import { getAllMovies } from './getAllMovies';
 
 const Home = (): JSX.Element => {
-  const movies = useAppSelector(getMovies);
+  const [movieList, setMovieList] = useState<IMovieItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const { myListId } = useGetMyList();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (myListId) {
-      const storedAccessToken = store.get('accessToken');
-      getMovieList(storedAccessToken, myListId).then((response) => {
-        const { comments, results } = response.data;
-
-        const tempComment = Object.keys(comments).map((value) => {
-          const temp = value.split(':');
-          return { id: Number(temp[1]), type: temp[0], comment: comments[value] };
-        });
-        dispatch(setComments(tempComment));
-        dispatch(setMovies(results));
+      getAllMovies(myListId).then((response) => {
+        const { allMovies, comments } = response;
+        dispatch(setComments(comments));
+        setMovieList(allMovies);
+        setLoading(false);
       });
     }
   }, [dispatch, myListId]);
 
   return (
     <Container>
-      <MovieTable<IMovieItem> rows={movies} filter='movie' />
+      {!loading && <MovieTable<IMovieItem> rows={movieList} filter='movie' />}
+      {loading && <Loading />}
     </Container>
   );
 };

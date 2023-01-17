@@ -52,13 +52,20 @@ export const addMovieItem = (accessToken: string, id: number, items: { media_typ
     }
   );
 
-export const getMovieList = (accessToken: string, id: number) =>
-  axios.get(`${MOVIE_API_URL}/4/list/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
+export const getMovieList = (accessToken: string, id: number, page: number) =>
+  axios.get(`${MOVIE_API_URL}/4/list/${id}?page=${page}&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
       'Cache-Control': 'no-cache',
     },
+    params: {
+      timestamp: new Date().getTime(),
+    },
+  });
+
+export const getMovieListV3 = (accessToken: string, id: number) =>
+  axios.get(`${MOVIE_API_URL}/3/list/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
     params: {
       timestamp: new Date().getTime(),
     },

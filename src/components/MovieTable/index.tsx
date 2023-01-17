@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Table,
@@ -32,16 +32,18 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useAppDispatch();
 
-  const handleChangePage = (_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = useCallback((_event: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  }, []);
+
+  const handleChangeRowsPerPage = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
+  }, []);
 
   const locator = useLocation();
   const selectedMovies = useAppSelector(getSelectedMovies);
+
   const handleClickRow = (id: number) => {
     const remove = selectedMovies.some((value) => value.id === id);
     if (locator.pathname !== '/search') return;
@@ -54,6 +56,7 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
 
   const [selectedPopoverItem, setSelectedPopoverItem] = useState<{ id: number; type: string } | null>(null);
   const [popoverAnchorEl, setPopoverAnchorEl] = useState<HTMLButtonElement | null>(null);
+
   const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>, id: number, type: string) => {
     event.stopPropagation();
     setPopoverAnchorEl(event.currentTarget);
@@ -61,9 +64,13 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
   };
 
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const handleOnCloseModal = useCallback(() => {
+    setOpenUpdateModal(false);
+  }, []);
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 350 }} aria-label='pagination table'>
+      <Table sx={{ minWidth: 330 }} aria-label='pagination table'>
         <TableHead>
           <TableRow>
             {Object.keys(columns[filter]).map((key) => {
@@ -103,7 +110,7 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
                   <TableCell align='center'>
                     <button
                       type='button'
-                      onClick={(event) => handlePopoverClick(event, row.id, row?.media_type || filter)}
+                      onClick={(event) => handlePopoverClick(event, row.id, row.media_type || filter)}
                     >
                       <MoreVertIcon fontSize='small' className={styles.rowButton} />
                     </button>
@@ -147,7 +154,7 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
         setOpenUpdateModal={setOpenUpdateModal}
         selectedItem={selectedPopoverItem}
       />
-      {openUpdateModal && <UpdateListModal onClose={() => setOpenUpdateModal(false)} item={selectedPopoverItem} />}
+      {openUpdateModal && <UpdateListModal onClose={handleOnCloseModal} item={selectedPopoverItem} />}
     </TableContainer>
   );
 };

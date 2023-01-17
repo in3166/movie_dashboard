@@ -25,8 +25,13 @@
       color: colors.$GRAY6;
     }
 
+    .notRecommendPW {
+      color: colors.$GRAY6;
+    }
+
     @include responsive.mobileOnly {
       width: 90%;
+      font-size: 5px;
     }
 
     .loginButton {

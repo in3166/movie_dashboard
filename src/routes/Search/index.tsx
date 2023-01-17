@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import store from 'store';
 
@@ -11,6 +11,7 @@ import MovieTable from 'components/MovieTable';
 import SearchBar from './SearchBar';
 import defaultPerson from 'assets/svgs/defaultPerson.png';
 import styles from './search.module.scss';
+import Container from 'components/Container';
 
 const Search = (): JSX.Element => {
   const [items, setItems] = useState([]);
@@ -25,7 +26,7 @@ const Search = (): JSX.Element => {
 
   const selectedMovies = useAppSelector(getSelectedMovies);
 
-  const handleClickAddItem = () => {
+  const handleClickAddItem = useCallback(() => {
     if (!selectedMovies || selectedMovies.length === 0) return;
     const selectedItems = selectedMovies.map((value) => {
       return { media_type: value.media_type, media_id: value.id };
@@ -36,7 +37,7 @@ const Search = (): JSX.Element => {
     addMovieItem(storedAccessToken, myListId, selectedItems).then((response) => {
       if (response.data.success) dispatch(setSelectedMovies([]));
     });
-  };
+  }, [dispatch, selectedMovies]);
 
   return (
     <>
@@ -83,7 +84,9 @@ const Search = (): JSX.Element => {
             </div>
           </>
         ) : (
-          <MovieTable rows={items} filter={filter} />
+          <Container>
+            <MovieTable rows={items} filter={filter} />
+          </Container>
         )}
         <button type='button' className={styles.addButton} onClick={handleClickAddItem}>
           추가

@@ -1,3 +1,5 @@
+import store from 'store';
+
 export const resetStore = () => {
   store.remove('myListId');
   store.remove('accessToken');

@@ -14,21 +14,21 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { getSelectedMovies, setSelectedMovies } from 'states/moives';
-import { columns } from './column';
+import SnackBar from 'components/SnackBar';
+import { useSnackbar } from 'components/SnackBar/useSnackBar';
 import UpdateListModal from './UpdateListModal/UpdateListModal';
 import TablePaginationActions from './TablePaginationActions';
-import PopoverButoon from './PopoverButton';
+import PopoverButton from './PopoverButton';
+import { columns } from './column';
 import { cx } from 'styles';
 import styles from './table.module.scss';
-import { useSnackbar } from 'components/SnackBar/useSnackBar';
-import SnackBar from 'components/SnackBar';
 
-type TableProps<T extends object> = {
+interface TableProps {
   filter: string;
-  rows: (T & { id: number; media_type?: string })[];
-};
+  rows: { id: number; media_type?: string }[];
+}
 
-const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) => {
+const CustomPaginationActionsTable = (props: TableProps) => {
   const { rows, filter } = props;
   const dispatch = useAppDispatch();
   const { message, setMessage } = useSnackbar(3000);
@@ -153,7 +153,7 @@ const CustomPaginationActionsTable = <T extends object>(props: TableProps<T>) =>
           </TableRow>
         </TableFooter>
       </Table>
-      <PopoverButoon
+      <PopoverButton
         anchorEl={popoverAnchorEl}
         setAnchorEl={setPopoverAnchorEl}
         setOpenUpdateModal={setOpenUpdateModal}

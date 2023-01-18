@@ -3,11 +3,18 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
+
+  .errorText {
+    margin: 25px 0;
+    color: colors.$GRAY6;
+  }
 
   .errorBox {
     width: 100%;
-    margin: 100px 0;
+    margin: 50px 0;
     overflow: scroll;
     text-align: center;
     box-shadow: 0 0 10px 1px colors.$GRAYD;
@@ -28,7 +35,7 @@
 
 .reloadButton {
   padding: 10px 20px;
-  margin-top: 50px;
+  margin-top: 0;
   font-size: 15px;
   font-weight: 600;
   color: colors.$GRAY6;

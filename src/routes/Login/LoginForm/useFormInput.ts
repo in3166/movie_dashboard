@@ -16,7 +16,7 @@ export const useFormInput = ({ validateFunction, initialValue = '' }: IUseFormIn
 
   const valueChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value: currentValue } = e.currentTarget;
-    setValue(currentValue);
+    setValue(currentValue.trim());
   }, []);
 
   const valueClickHandler = useCallback((e: MouseEvent<HTMLInputElement>) => {

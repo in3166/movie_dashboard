@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import Header from './Header';
 import Sidebar from './Sidebar';
 import ErrorFallback from './ErrorFallback';
-import Header from './Header';
 import styles from './layout.module.scss';
 
 const Layout = () => {

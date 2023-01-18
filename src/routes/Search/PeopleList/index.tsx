@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { IMovieItem, IPersonItem, ITvItem } from 'types/item';
 import { IMAGE_BASE_URL } from 'constant';
 import MovieTable from 'components/MovieTable';
+import LazyImage from 'components/MovieTable/LazyImage';
 import defaultPerson from 'assets/defaultPerson.png';
 import styles from '../search.module.scss';
 
@@ -28,10 +29,9 @@ const PeopleList = ({ items }: IPeopleListProps) => {
               onClick={() => handleClickPerson(value)}
               title={value.name}
             >
-              <img
+              <LazyImage
+                styles={styles.peopleImaage}
                 src={value.profile_path === null ? defaultPerson : IMAGE_BASE_URL + value.profile_path}
-                className={styles.peopleImaage}
-                alt='person profile'
               />
               <div>{value.name}</div>
             </div>

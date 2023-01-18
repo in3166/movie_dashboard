@@ -25,7 +25,7 @@ export const columns: {
 
         return (
           <div className={styles.titleWapper}>
-            <LazyImage src={imgSrc} />
+            <LazyImage src={imgSrc} styles={styles.poster} />
             <p className={styles.title}>{payload.title}</p>
           </div>
         );
@@ -55,7 +55,7 @@ export const columns: {
         const imgSrc = !payload.poster_path ? defaultTv : `${IMAGE_BASE_URL}/${payload.poster_path}`;
         return (
           <div className={styles.titleWapper}>
-            <LazyImage src={imgSrc} />
+            <LazyImage src={imgSrc} styles={styles.poster} />
             <p className={styles.title}>{payload.name}</p>
           </div>
         );

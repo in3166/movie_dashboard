@@ -1,6 +1,6 @@
 import { useState, FormEvent, useCallback, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useAppDispatch } from 'hooks';
-import { searchRequest } from 'services/movieAPI';
+import { searchList } from 'services/movieAPI';
 import { setSelectedMovies } from 'states/moives';
 import styles from '../search.module.scss';
 
@@ -36,7 +36,7 @@ const SearchBar = ({ setItems, setFilter, setLoading, setSnackBarStatus, setMess
     }
     try {
       setLoading(true);
-      const { data } = await searchRequest[selectFilterValue](searchText);
+      const { data } = await searchList(searchText, selectFilterValue === 'people' ? 'person' : selectFilterValue);
       setFilter(selectFilterValue);
       setItems(data.results);
       dispatch(setSelectedMovies([]));

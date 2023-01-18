@@ -96,17 +96,7 @@ export const updateMovieItem = (
 export const getPerson = (id: string) =>
   axios.get(`${MOVIE_API_URL}/3/person/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
 
-export const searchRequest: { [key: string]: (text: string) => Promise<any> } = {
-  movie: (text: string) =>
-    axios.get(
-      `${MOVIE_API_URL}/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
-    ),
-  people: (text: string) =>
-    axios.get(
-      `${MOVIE_API_URL}/3/search/person?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
-    ),
-  tv: (text: string) =>
-    axios.get(
-      `${MOVIE_API_URL}/3/search/tv?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
-    ),
-};
+export const searchList = (text: string, filter: string) =>
+  axios.get(
+    `${MOVIE_API_URL}/3/search/${filter}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
+  );

@@ -7,7 +7,7 @@ import { getMovies, setMovies } from 'states/moives';
 import { deleteMovieItem } from 'services/movieAPI';
 import styles from './popoverButton.module.scss';
 
-interface IPopoverButoonProps {
+interface IPopoverButtonProps {
   anchorEl: HTMLButtonElement | null;
   setAnchorEl: Dispatch<SetStateAction<HTMLButtonElement | null>>;
   setOpenUpdateModal: Dispatch<React.SetStateAction<boolean>>;
@@ -15,14 +15,15 @@ interface IPopoverButoonProps {
   setSnackBarStatus: Dispatch<React.SetStateAction<string>>;
   setMessage: (text: string) => void;
 }
-const PopoverButoon = ({
+
+const PopoverButton = ({
   anchorEl,
   setAnchorEl,
   setOpenUpdateModal,
   selectedItem,
   setSnackBarStatus,
   setMessage,
-}: IPopoverButoonProps) => {
+}: IPopoverButtonProps) => {
   const dispatch = useAppDispatch();
 
   const movies = useAppSelector(getMovies);
@@ -81,4 +82,4 @@ const PopoverButoon = ({
   );
 };
 
-export default PopoverButoon;
+export default PopoverButton;

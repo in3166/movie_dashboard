@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import store from 'store';
 
 import { getAccessToken, getSessionId } from 'services/movieAPI';
+import { useSnackbar } from 'components/SnackBar/useSnackBar';
+import SnackBar from 'components/SnackBar';
 import LoginForm from './LoginForm';
 import logoImg from 'assets/logo.png';
 import { cx } from 'styles';
 import styles from './login.module.scss';
-import { useSnackbar } from 'components/SnackBar/useSnackBar';
-import SnackBar from 'components/SnackBar';
 
 const Login = (): JSX.Element => {
   const navigator = useNavigate();
@@ -16,7 +16,7 @@ const Login = (): JSX.Element => {
   const [snackBarStatus, setSnackBarStatus] = useState('');
   const [requestToken, setRequestToken] = useState<string | null>(null);
 
-  const createUserSessionId = async () => {
+  const handleClickAccess = async () => {
     if (!requestToken) return;
     try {
       const accessTokenResponse = await getAccessToken(requestToken);
@@ -54,7 +54,7 @@ const Login = (): JSX.Element => {
           <LoginForm setRequestToken={setRequestToken} setSnackBarStatus={setSnackBarStatus} setMessage={setMessage} />
         )}
         {requestToken && (
-          <button type='button' onClick={createUserSessionId} className={cx(styles.loginButton, styles.connectButton)}>
+          <button type='button' onClick={handleClickAccess} className={cx(styles.loginButton, styles.connectButton)}>
             접속
           </button>
         )}

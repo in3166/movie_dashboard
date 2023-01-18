@@ -6,12 +6,12 @@ import { getSelectedMovies, setSelectedMovies } from 'states/moives';
 import { addMovieItem } from 'services/movieAPI';
 import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
-import SearchBar from './SearchBar';
-import styles from './search.module.scss';
 import { useSnackbar } from 'components/SnackBar/useSnackBar';
 import SnackBar from 'components/SnackBar';
 import Loading from 'components/Loading';
 import PeopleList from './PeopleList';
+import SearchBar from './SearchBar';
+import styles from './search.module.scss';
 
 const Search = (): JSX.Element => {
   const dispatch = useAppDispatch();

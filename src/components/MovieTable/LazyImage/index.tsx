@@ -1,12 +1,12 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import NoImage from 'assets/defaultMovie.png';
-import styles from '../table.module.scss';
+import { useEffect, useRef, useState } from 'react';
+import NoImage from 'assets/noImage.png';
 
-interface ILazyImage {
+interface ILazyImageProps {
   src: string;
+  styles: string;
 }
 
-const LazyImage: FC<ILazyImage> = ({ src }): JSX.Element => {
+const LazyImage = ({ src, styles }: ILazyImageProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const imgRef = useRef<HTMLImageElement>(null);
@@ -26,7 +26,7 @@ const LazyImage: FC<ILazyImage> = ({ src }): JSX.Element => {
     });
   };
 
-  return <img ref={imgRef} src={isLoading ? src : NoImage} className={styles.poster} alt='item poster' />;
+  return <img ref={imgRef} src={isLoading ? src : NoImage} className={styles} alt='item poster' />;
 };
 
 export default LazyImage;

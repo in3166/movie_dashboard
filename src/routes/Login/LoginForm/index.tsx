@@ -1,10 +1,10 @@
 import { useRef, FormEvent, Dispatch, SetStateAction } from 'react';
 import store from 'store';
 
-import { useFormInput } from 'hooks';
 import { getRequestToken } from 'services/movieAPI';
 import { MOVIE_WEB_URL } from 'constant';
 import InputText from './InputText/index';
+import { useFormInput } from './useFormInput';
 import { isNotRecommendPassword, validateEmail, validatePassword } from './validateInput';
 import styles from '../login.module.scss';
 
@@ -20,7 +20,6 @@ const LoginForm = ({ setRequestToken, setSnackBarStatus, setMessage }: ILoginFor
   const password = useFormInput({ validateFunction: validatePassword });
 
   const notRecommendPassword = isNotRecommendPassword(password.value);
-
   const handleLoginSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -73,6 +72,9 @@ const LoginForm = ({ setRequestToken, setSnackBarStatus, setMessage }: ILoginFor
       )}
       {notRecommendPassword.phoneType && <p className={styles.notRecommendPw}>전화번호 사용은 지양해주세요.</p>}
       {notRecommendPassword.birthType && <p className={styles.notRecommendPw}>생년월일의 사용은 지양해주세요.</p>}
+      {notRecommendPassword.isSimilarToEmail(email.value) && (
+        <p className={styles.notRecommendPw}>이메일과 유사한 비밀번호는 지양해주세요.</p>
+      )}
 
       <button type='submit' className={styles.loginButton}>
         Log In

@@ -1,6 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
-
 import styles from './modal.module.scss';
 
 interface IBackDropProps {

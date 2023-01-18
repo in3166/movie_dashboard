@@ -4,9 +4,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import store from 'store';
 
 import { getEmail, setEmail } from 'states/user';
-import styles from './header.module.scss';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { resetStore } from 'utils/resetStore';
+import styles from './header.module.scss';
 
 const Header = () => {
   const dispatch = useAppDispatch();

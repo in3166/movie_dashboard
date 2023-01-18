@@ -100,7 +100,7 @@
 
 1. 프로젝트 클론: `git clone https://github.com/in3166/movie_dashboard.git`
 2. 패키지 설치: `yarn install`
-3. `.env` 설정
+3. `.env` 설정 (`./movie_dashboard` 폴더 아래에 위치)
 4. 프로젝트 실행: `yarn start`
 5. `http://localhost:3000/`으로 접속
 
@@ -179,13 +179,13 @@ $> yarn start
 - **목록 리스트 조회**
   - route: `/movie/list`
   - API: [https://developers.themoviedb.org/4/list/get-list](https://developers.themoviedb.org/4/list/get-list)
-<br>
+  <br>
 
-- 구현
-  - 1. 내 목록 가져오기
-    - `useGetMyList()`
-      - `localStorae`에 `myListId`가 존재하면 해당 목록을 가져옵니다.
-      - `myListId`가 존재하지 않으면 해당 유저의 새로운 목록을 생성합니다.
+  - 구현
+    - 1. 내 목록 가져오기
+      - `useGetMyList()`
+        - `localStorae`에 `myListId`가 존재하면 해당 목록을 가져옵니다.
+        - `myListId`가 존재하지 않으면 해당 유저의 새로운 목록을 생성합니다.
 
 <br>
 
@@ -199,22 +199,22 @@ $> yarn start
   - API: [https://developers.themoviedb.org/4/list/add-items](https://developers.themoviedb.org/4/list/add-items)
   - API에서 항목의 Comment 수정만 지원하고 있습니다.
   - 수정된 결과는 `UpdateModal`이나 API 사이트의 내 계정 - 목록에서 확인할 수 있습니다.
-<br>
+  <br>
 
-- 구현
-  - `PopoverButton` 컴포넌트 내부에 `수정` 버튼 클릭 시 업데이트 모달(`UpdateListModal`)이 열립니다.
-  - `UpdateListModal` 컴포넌트의 `확인` 버튼 클릭 시 `handleClickUpdate()` 함수를 호출합니다.
-    - `accessToken`과 `myListId`, 선택된 아이템 정보를 가지고 `updateMovieItem()` API 함수를 호출하여 아이템 정보를 수정합니다. (`services/movieAPI`)
+  - 구현
+    - `PopoverButton` 컴포넌트 내부에 `수정` 버튼 클릭 시 업데이트 모달(`UpdateListModal`)이 열립니다.
+    - `UpdateListModal` 컴포넌트의 `확인` 버튼 클릭 시 `handleClickUpdate()` 함수를 호출합니다.
+      - `accessToken`과 `myListId`, 선택된 아이템 정보를 가지고 `updateMovieItem()` API 함수를 호출하여 아이템 정보를 수정합니다. (`services/movieAPI`)
 
 <br>
 
 - **목록 항목 삭제**
   - API: [https://developers.themoviedb.org/4/list/update-items](https://developers.themoviedb.org/4/list/update-items)
-<br>
+  <br>
 
-- 구현
-  - `PopoverButton` 컴포넌트 내부에 `삭제` 버튼 클릭 시 해당 테이블 행의 아이템이 삭제됩니다.
-    - `handleClickDelete()` 함수를 호출하고 `accessToken`과 `myListId`, 아이템 정보를 가지고 `deleteMovieItem()` API 함수를 호출하여 아이템을 삭제합니다. (`services/movieAPI`)
+  - 구현
+    - `PopoverButton` 컴포넌트 내부에 `삭제` 버튼 클릭 시 해당 테이블 행의 아이템이 삭제됩니다.
+      - `handleClickDelete()` 함수를 호출하고 `accessToken`과 `myListId`, 아이템 정보를 가지고 `deleteMovieItem()` API 함수를 호출하여 아이템을 삭제합니다. (`services/movieAPI`)
 
 <br>
 

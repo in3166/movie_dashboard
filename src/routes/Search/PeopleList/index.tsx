@@ -20,6 +20,7 @@ const PeopleList = ({ items }: IPeopleListProps) => {
   return (
     <>
       <div className={styles.peopleContainer}>
+        {items.length === 0 && <div className={styles.noItems}>No items.</div>}
         {items.map((value: IPersonItem) => {
           return (
             <div

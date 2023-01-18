@@ -128,7 +128,7 @@ const CustomPaginationActionsTable = (props: TableProps) => {
           {rows.length === 0 && (
             <TableRow>
               <TableCell align='center' colSpan={6}>
-                No Items.
+                No items.
               </TableCell>
             </TableRow>
           )}

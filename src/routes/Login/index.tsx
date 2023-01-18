@@ -47,7 +47,7 @@ const Login = (): JSX.Element => {
       <section className={styles.section}>
         <header className={styles.header}>
           <div className={styles.logoImageWrapper}>
-            <img width={35} height={35} src={logoImg} className={styles.logoImage} alt='logo' />
+            <img width={70} height={70} src={logoImg} className={styles.logoImage} alt='logo' />
           </div>
           <h3 className={styles.id}>로그인</h3>
         </header>

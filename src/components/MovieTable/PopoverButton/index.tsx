@@ -69,12 +69,12 @@ const PopoverButton = ({
       }}
     >
       <div>
-        <button type='button' className={styles.popButton} onClick={handleClickUpdate}>
+        <button type='button' className={styles.popButton} onClick={handleClickUpdate} aria-label='update item comment'>
           수정
         </button>
       </div>
       <div>
-        <button type='button' className={styles.popButton} onClick={handleClickDelete}>
+        <button type='button' className={styles.popButton} onClick={handleClickDelete} aria-label='delete item'>
           삭제
         </button>
       </div>

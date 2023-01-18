@@ -46,7 +46,9 @@ const Login = (): JSX.Element => {
     <main className={styles.main}>
       <section className={styles.section}>
         <header className={styles.header}>
-          <img src={logoImg} className={styles.logoImage} alt='logo' />
+          <div className={styles.logoImageWrapper}>
+            <img width={35} height={35} src={logoImg} className={styles.logoImage} alt='logo' />
+          </div>
           <h3 className={styles.id}>로그인</h3>
         </header>
 
@@ -54,7 +56,12 @@ const Login = (): JSX.Element => {
           <LoginForm setRequestToken={setRequestToken} setSnackBarStatus={setSnackBarStatus} setMessage={setMessage} />
         )}
         {requestToken && (
-          <button type='button' onClick={handleClickAccess} className={cx(styles.loginButton, styles.connectButton)}>
+          <button
+            type='button'
+            aria-label='access page'
+            onClick={handleClickAccess}
+            className={cx(styles.loginButton, styles.connectButton)}
+          >
             접속
           </button>
         )}

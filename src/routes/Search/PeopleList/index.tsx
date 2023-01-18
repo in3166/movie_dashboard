@@ -29,10 +29,12 @@ const PeopleList = ({ items }: IPeopleListProps) => {
               onClick={() => handleClickPerson(value)}
               title={value.name}
             >
-              <LazyImage
-                styles={styles.peopleImaage}
-                src={value.profile_path === null ? defaultPerson : IMAGE_BASE_URL + value.profile_path}
-              />
+              <div className={styles.peopleImaageWrapper}>
+                <LazyImage
+                  styles={styles.peopleImaage}
+                  src={value.profile_path === null ? defaultPerson : IMAGE_BASE_URL + value.profile_path}
+                />
+              </div>
               <div>{value.name}</div>
             </div>
           );

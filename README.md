@@ -98,11 +98,11 @@
     3. 설치 및 실행 방법
 </h2>
 
-- 1. 프로젝트 클론: `git clone https://github.com/in3166/movie_dashboard.git`
-- 2. 패키지 설치: `yarn install`
-- 3. `.env` 설정
-- 4. 프로젝트 실행: `yarn start`
-- 5. `http://localhost:3000/`으로 접속
+1. 프로젝트 클론: `git clone https://github.com/in3166/movie_dashboard.git`
+2. 패키지 설치: `yarn install`
+3. `.env` 설정
+4. 프로젝트 실행: `yarn start`
+5. `http://localhost:3000/`으로 접속
 
 ```bash
 $> git clone https://github.com/in3166/movie_dashboard.git
@@ -124,6 +124,8 @@ $> yarn start
 </h2>
 
 ### 1. 로그인 페이지 (Login, `/src/routes/Login`)
+
+<img src="https://user-images.githubusercontent.com/45654988/213096290-5dd23277-a62d-4b70-aaec-5925874a9c69.PNG" width="50%" height="50%" />
 
 - route: `/login`
 - API
@@ -151,12 +153,12 @@ $> yarn start
   - 1. `request_token` 가져오기
     - 이메일과 비밀번호를 입력하고 로그인 버튼 클릭합니다.
     - `request_token`을 가져오고 API 인증 페이지를 열어 사용자가 허가 버튼을 클릭합니다.
-<br>
+  <br>
 
   - 2. `access_token` 가져오기
     - 사용자가 허가를 클릭하면 로그인 페이지로 돌아와 `접속` 버튼 클릭합니다.
     - `request_token`으로 `access_token`을 가져옵니다.
-<br>
+  <br>
 
   - 3. `session_id` 가져오기
     - 가져온 `access_token`으로 `session_id`를 가져옵니다.
@@ -171,6 +173,8 @@ $> yarn start
 <br>
 
 ### 2. Movie 목록 조회 (Home, `/src/routes/Home`)
+
+<img src="https://user-images.githubusercontent.com/45654988/213096289-fcdf9dfd-66ea-4db9-8c93-cebd719f6108.PNG" width="70%" height="70%" />
 
 - **목록 리스트 조회**
   - route: `/movie/list`
@@ -215,6 +219,8 @@ $> yarn start
 <br>
 
 ### 3. 검색 페이지 (Search `/src/routes/Search`)
+
+<img src="https://user-images.githubusercontent.com/45654988/213096292-7f8fc36d-be87-4e8a-8c39-33e27c4b8cd4.PNG" width="70%" height="70%"/>
 
 - route: `/search`
 - API: [https://developers.themoviedb.org/3/search](https://developers.themoviedb.org/3/search)

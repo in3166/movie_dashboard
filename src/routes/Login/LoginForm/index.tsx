@@ -76,7 +76,7 @@ const LoginForm = ({ setRequestToken, setSnackBarStatus, setMessage }: ILoginFor
         <p className={styles.notRecommendPw}>이메일과 유사한 비밀번호는 지양해주세요.</p>
       )}
 
-      <button type='submit' className={styles.loginButton}>
+      <button type='submit' className={styles.loginButton} aria-label='login'>
         Log In
       </button>
     </form>

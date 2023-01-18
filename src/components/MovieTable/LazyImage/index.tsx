@@ -26,7 +26,9 @@ const LazyImage = ({ src, styles }: ILazyImageProps): JSX.Element => {
     });
   };
 
-  return <img ref={imgRef} src={isLoading ? src : NoImage} className={styles} alt='item poster' />;
+  return (
+    <img width={77} height={90} ref={imgRef} src={isLoading ? src : NoImage} className={styles} alt='item poster' />
+  );
 };
 
 export default LazyImage;

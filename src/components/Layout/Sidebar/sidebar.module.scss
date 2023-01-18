@@ -16,10 +16,16 @@
     margin: 7px 0;
     font-size: 19px;
 
-    .logoImage {
+    .logoImageWrapper {
       width: 25px;
-      height: auto;
+      height: 25px;
       margin-right: 6px;
+      overflow: hidden;
+
+      .logoImage {
+        width: 100%;
+        height: auto;
+      }
     }
 
     a {

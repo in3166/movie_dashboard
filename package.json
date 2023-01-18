@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/plugin-transform-modules-commonjs": "^7.20.11",
-    "@babel/plugin-transform-runtime": "^7.19.6",
-    "@babel/preset-env": "^7.20.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",

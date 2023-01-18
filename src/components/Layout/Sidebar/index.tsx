@@ -46,7 +46,9 @@ const Sidebar = (): JSX.Element => {
     >
       <div className={styles.logo}>
         <NavLink to='/movie/list' aria-label='link to home page' className={styles.logo}>
-          <img src={logoImg} className={styles.logoImage} alt='logo' />
+          <div className={styles.logoImageWrapper}>
+            <img width={25} height={25} src={logoImg} className={styles.logoImage} alt='logo' />
+          </div>
           Dashboard
         </NavLink>
       </div>
@@ -59,7 +61,7 @@ const Sidebar = (): JSX.Element => {
               className={({ isActive }) => cx({ [styles.isActive]: isActive })}
             >
               <ListAltIcon />
-              <span>Movie 목록 조회</span>
+              <span aria-hidden>Movie 목록 조회</span>
             </NavLink>
           </li>
           <li>

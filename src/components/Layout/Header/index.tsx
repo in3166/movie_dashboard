@@ -35,7 +35,7 @@ const Header = () => {
       <h2>{location.pathname === '/movie/list' ? 'Movie 목록 조회' : '검색'}</h2>
       <div className={styles.userInfo}>
         {email}
-        <button type='button' onClick={handleLogout}>
+        <button type='button' onClick={handleLogout} aria-label='logout'>
           <AccountCircleIcon />
         </button>
       </div>

@@ -79,9 +79,15 @@
       opacity: 0.7;
     }
 
-    .peopleImaage {
-      width: 75px;
-      margin: auto;
+    .peopleImaageWrapper {
+      width: 77px;
+      height: 90px;
+      overflow: hidden;
+
+      .peopleImaage {
+        width: 100%;
+        height: auto;
+      }
     }
 
     div {

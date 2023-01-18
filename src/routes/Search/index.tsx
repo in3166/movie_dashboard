@@ -64,7 +64,7 @@ const Search = (): JSX.Element => {
             <MovieTable rows={items} filter={renderByFilter} />
           </Container>
         )}
-        <button type='button' className={styles.addButton} onClick={handleClickAddItem}>
+        <button type='button' className={styles.addButton} onClick={handleClickAddItem} aria-label='add item'>
           추가
         </button>
       </div>

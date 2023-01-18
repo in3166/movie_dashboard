@@ -81,7 +81,7 @@ const CustomPaginationActionsTable = (props: TableProps) => {
             {Object.keys(columns[filter]).map((key) => {
               const { name, width } = columns[filter][key];
               return (
-                <TableCell align='center' width={width} key={key}>
+                <TableCell align='center' width={width} key={key} aria-hidden>
                   {name}
                 </TableCell>
               );
@@ -116,6 +116,7 @@ const CustomPaginationActionsTable = (props: TableProps) => {
                     <button
                       type='button'
                       onClick={(event) => handlePopoverClick(event, row.id, row.media_type || filter)}
+                      aria-label='popover'
                     >
                       <MoreVertIcon fontSize='small' className={styles.rowButton} />
                     </button>

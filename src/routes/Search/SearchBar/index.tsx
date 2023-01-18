@@ -63,7 +63,7 @@ const SearchBar = ({ setItems, setFilter, setLoading, setSnackBarStatus, setMess
         </select>
         <input type='text' value={searchText} className={styles.inputText} onChange={searchTextChangeHandler} />
       </div>
-      <button type='submit' className={styles.submitSearch}>
+      <button type='submit' className={styles.submitSearch} aria-label='search'>
         검색
       </button>
     </form>

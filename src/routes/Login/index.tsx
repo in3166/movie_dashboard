@@ -4,7 +4,7 @@ import store from 'store';
 
 import { getAccessToken, getSessionId } from 'services/movieAPI';
 import LoginForm from './LoginForm';
-import logoImg from 'assets/svgs/logo.png';
+import logoImg from 'assets/logo.png';
 import { cx } from 'styles';
 import styles from './login.module.scss';
 import { useSnackbar } from 'components/SnackBar/useSnackBar';
@@ -18,26 +18,28 @@ const Login = (): JSX.Element => {
 
   const createUserSessionId = async () => {
     if (!requestToken) return;
-    const accessTokenResponse = await getAccessToken(requestToken);
+    try {
+      const accessTokenResponse = await getAccessToken(requestToken);
+      if (accessTokenResponse.data.success) {
+        const tempAccessToken = accessTokenResponse.data.access_token;
+        store.set('accessToken', tempAccessToken);
 
-    if (accessTokenResponse.data.success) {
-      const tempAccessToken = accessTokenResponse.data.access_token;
-      store.set('accessToken', tempAccessToken);
-
-      const sessionId = await getSessionId(tempAccessToken);
-      if (sessionId.data.success) {
-        const sessionObj = {
-          sessionId: sessionId.data.session_id,
-          expire: Date.now() + 1000 * 60 * 30,
-        };
-        store.set('sessionId', JSON.stringify(sessionObj));
-        navigator('/');
-        return;
+        const sessionId = await getSessionId(tempAccessToken);
+        if (sessionId.data.success) {
+          const sessionObj = {
+            sessionId: sessionId.data.session_id,
+            expire: Date.now() + 1000 * 60 * 30,
+          };
+          store.set('sessionId', JSON.stringify(sessionObj));
+          navigator('/movie/list');
+          return;
+        }
       }
+    } catch (error) {
+      setSnackBarStatus('error');
+      setMessage(`페이지 접속에 실패하였습니다.`);
+      setRequestToken(null);
     }
-    setSnackBarStatus('error');
-    setMessage(`페이지 접속에 실패하였습니다.`);
-    setRequestToken(null);
   };
 
   return (

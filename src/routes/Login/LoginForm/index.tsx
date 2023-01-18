@@ -30,13 +30,17 @@ const LoginForm = ({ setRequestToken, setSnackBarStatus, setMessage }: ILoginFor
       setMessage(`입력값을 확인해주세요.`);
       return;
     }
+    try {
+      const { data } = await getRequestToken();
+      store.set('requestToken', data.request_token);
+      store.set('email', email.value);
 
-    const { data } = await getRequestToken();
-    store.set('requestToken', data.request_token);
-    store.set('email', email.value);
-
-    window.open(`${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`);
-    setRequestToken(data.request_token);
+      window.open(`${MOVIE_WEB_URL}/auth/access?request_token=${data.request_token}`);
+      setRequestToken(data.request_token);
+    } catch (error) {
+      setSnackBarStatus('error');
+      setMessage(`로그인을 실패하였습니다.`);
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import NoImage from 'assets/svgs/defaultMovie.png';
+import NoImage from 'assets/defaultMovie.png';
 import styles from '../table.module.scss';
 
 interface ILazyImage {

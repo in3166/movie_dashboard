@@ -5,7 +5,7 @@ const NotFound = () => {
   return (
     <div className={styles.notFoundWrapper}>
       <h2>404 Not Found</h2>
-      <Link to='/'>홈으로</Link>
+      <Link to='/movie/list'>홈으로</Link>
     </div>
   );
 };

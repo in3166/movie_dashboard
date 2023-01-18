@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { PrivateRoute } from './PrivateRoute';
 import Layout from 'components/Layout';
@@ -16,9 +16,11 @@ const App = () => {
     <div className={styles.app}>
       <Suspense fallback={<Loading />}>
         <Routes>
+          <Route path='/login' element={<Login />} />
           <Route element={<Layout />}>
+            <Route path='/' element={<Navigate replace to='/movie/list' />} />
             <Route
-              path='/'
+              path='/movie/list'
               element={
                 <PrivateRoute>
                   <Home />
@@ -34,7 +36,6 @@ const App = () => {
               }
             />
           </Route>
-          <Route path='/login' element={<Login />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Suspense>

@@ -1,14 +1,17 @@
-import { useState, FormEvent, useCallback, ChangeEvent } from 'react';
+import { useState, FormEvent, useCallback, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useAppDispatch } from 'hooks';
 import { searchRequest } from 'services/movieAPI';
 import { setSelectedMovies } from 'states/moives';
 import styles from '../search.module.scss';
 
 interface ISearchBar {
-  setItems: React.Dispatch<React.SetStateAction<never[]>>;
-  setFilter: React.Dispatch<React.SetStateAction<string>>;
+  setItems: Dispatch<SetStateAction<never[]>>;
+  setFilter: Dispatch<SetStateAction<string>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setSnackBarStatus: (value: SetStateAction<string>) => void;
+  setMessage: (text: string) => void;
 }
-const SearchBar = ({ setItems, setFilter }: ISearchBar) => {
+const SearchBar = ({ setItems, setFilter, setLoading, setSnackBarStatus, setMessage }: ISearchBar) => {
   const [selectFilterValue, setSelectFilterValue] = useState('movie');
   const [searchText, setSearchText] = useState('');
 
@@ -23,12 +26,20 @@ const SearchBar = ({ setItems, setFilter }: ISearchBar) => {
   }, []);
 
   const dispatch = useAppDispatch();
+
   const handleSearchSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const { data } = await searchRequest[selectFilterValue](searchText);
-    setFilter(selectFilterValue);
-    setItems(data.results);
-    dispatch(setSelectedMovies([]));
+    setLoading(true);
+    try {
+      e.preventDefault();
+      const { data } = await searchRequest[selectFilterValue](searchText);
+      setFilter(selectFilterValue);
+      setItems(data.results);
+      dispatch(setSelectedMovies([]));
+    } catch (error) {
+      setSnackBarStatus('error');
+      setMessage(`검색을 실패하였습니다.`);
+    }
+    setLoading(false);
   };
 
   return (

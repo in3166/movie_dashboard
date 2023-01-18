@@ -64,13 +64,6 @@ export const getMovieList = (accessToken: string, id: number, page: number) =>
     },
   });
 
-export const getMovieListV3 = (accessToken: string, id: number) =>
-  axios.get(`${MOVIE_API_URL}/3/list/${id}?api_key=${process.env.REACT_APP_MOVIE_API_KEY}`, {
-    params: {
-      timestamp: new Date().getTime(),
-    },
-  });
-
 export const deleteMovieItem = (accessToken: string, id: number, items: { media_type: string; media_id: number }[]) =>
   axios.delete(`${MOVIE_API_URL}/4/list/${id}/items`, {
     data: {
@@ -105,9 +98,15 @@ export const getPerson = (id: string) =>
 
 export const searchRequest: { [key: string]: (text: string) => Promise<any> } = {
   movie: (text: string) =>
-    axios.get(`${MOVIE_API_URL}/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`),
+    axios.get(
+      `${MOVIE_API_URL}/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
+    ),
   people: (text: string) =>
-    axios.get(`${MOVIE_API_URL}/3/search/person?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`),
+    axios.get(
+      `${MOVIE_API_URL}/3/search/person?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
+    ),
   tv: (text: string) =>
-    axios.get(`${MOVIE_API_URL}/3/search/tv?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}`),
+    axios.get(
+      `${MOVIE_API_URL}/3/search/tv?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${text}&include_adult=false`
+    ),
 };

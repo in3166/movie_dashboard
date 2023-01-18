@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import store from 'store';
 
 import { createMyList } from 'services/movieAPI';
+import { resetStore } from 'utils/resetStore';
 
 export const useGetMyList = () => {
   const navigator = useNavigate();
@@ -12,6 +13,7 @@ export const useGetMyList = () => {
     try {
       const storedAccessToken = store.get('accessToken');
       if (!storedAccessToken) {
+        resetStore();
         navigator('/login');
       }
 
@@ -27,6 +29,7 @@ export const useGetMyList = () => {
 
       setMyListId(tempMyListId);
     } catch (error) {
+      resetStore();
       navigator('/login');
     }
   }, [navigator]);

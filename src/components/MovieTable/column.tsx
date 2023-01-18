@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import { IMovieItem, ITvItem } from 'types/item';
 import { IMAGE_BASE_URL } from 'constant';
 import LazyImage from './LazyImage';
-import defaultMovie from 'assets/svgs/defaultMovie.png';
-import defaultTv from 'assets/svgs/defaultTv.png';
+import defaultMovie from 'assets/defaultMovie.png';
+import defaultTv from 'assets/defaultTv.png';
 import styles from './table.module.scss';
 
 export const columns: {

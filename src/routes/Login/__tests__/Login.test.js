@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { fireEvent, renderWithProviders, screen } from 'test-utils';
+import { fireEvent, renderWithProviders, screen } from 'utils/test-utils';
 import { loginUserValue } from 'fixtures/users';
 import Login from '../index';
 
@@ -51,7 +51,7 @@ describe('login page', () => {
     }
   );
 
-  test('로그인 후 접속 버튼 표시', async () => {
+  test('Access button appears after login', async () => {
     renderWithProviders(<Login />);
 
     const field = screen.getByLabelText('EMAIL');
@@ -62,12 +62,10 @@ describe('login page', () => {
 
     const submitButton = await screen.findByText('Log In');
     await userEvent.click(submitButton);
+    windowSpy.mockImplementation(() => ({}));
 
     const connectButton = await screen.findByText('접속');
     expect(connectButton).toBeInTheDocument();
     expect(submitButton).not.toBeInTheDocument();
-
-    await userEvent.click(connectButton);
-    windowSpy.mockImplementation(() => ({}));
   });
 });

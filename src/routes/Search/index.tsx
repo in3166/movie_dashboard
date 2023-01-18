@@ -9,7 +9,7 @@ import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
 import SearchBar from './SearchBar';
 import { IMAGE_BASE_URL } from 'constant';
-import defaultPerson from 'assets/svgs/defaultPerson.png';
+import defaultPerson from 'assets/defaultPerson.png';
 import styles from './search.module.scss';
 import { useSnackbar } from 'components/SnackBar/useSnackBar';
 import SnackBar from 'components/SnackBar';
@@ -17,9 +17,10 @@ import SnackBar from 'components/SnackBar';
 const Search = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [items, setItems] = useState([]);
-  const [filter, setFilter] = useState('movie');
+  const [renderByFilter, setRenderByFilter] = useState('movie');
   const { message, setMessage } = useSnackbar(3000);
   const [snackBarStatus, setSnackBarStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [selectedPerson, setSelectedPerson] = useState([]);
   const handleClickPerson = (person: IPersonItem) => {
@@ -30,29 +31,39 @@ const Search = (): JSX.Element => {
 
   const handleClickAddItem = useCallback(() => {
     if (!selectedMovies || selectedMovies.length === 0) return;
+
     const selectedItems = selectedMovies.map((value) => {
       return { media_type: value.media_type, media_id: value.id };
     });
+
     const storedAccessToken = store.get('accessToken');
     const myListId = store.get('myListId');
 
-    addMovieItem(storedAccessToken, myListId, selectedItems).then((response) => {
-      if (response.data.success) {
-        dispatch(setSelectedMovies([]));
-        setSnackBarStatus('');
-        setMessage(`아이템을 추가하였습니다.`);
-      } else {
+    addMovieItem(storedAccessToken, myListId, selectedItems)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch(setSelectedMovies([]));
+          setSnackBarStatus('');
+          setMessage(`아이템을 추가하였습니다.`);
+        }
+      })
+      .catch(() => {
         setSnackBarStatus('error');
         setMessage(`아이템 추가를 실패하였습니다.`);
-      }
-    });
+      });
   }, [dispatch, selectedMovies, setMessage]);
 
   return (
     <>
-      <SearchBar setItems={setItems} setFilter={setFilter} />
+      <SearchBar
+        setItems={setItems}
+        setFilter={setRenderByFilter}
+        setLoading={setLoading}
+        setMessage={setMessage}
+        setSnackBarStatus={setSnackBarStatus}
+      />
       <div>
-        {filter === 'people' ? (
+        {renderByFilter === 'people' ? (
           <>
             <div className={styles.peopleContainer}>
               {items.map((value: IPersonItem) => {
@@ -94,7 +105,7 @@ const Search = (): JSX.Element => {
           </>
         ) : (
           <Container>
-            <MovieTable rows={items} filter={filter} />
+            <MovieTable rows={items} filter={renderByFilter} />
           </Container>
         )}
         <button type='button' className={styles.addButton} onClick={handleClickAddItem}>

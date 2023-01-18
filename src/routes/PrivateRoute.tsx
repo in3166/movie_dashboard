@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import store from 'store';
+import { resetStore } from 'utils/resetStore';
 
 export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const navigator = useNavigate();
@@ -15,8 +16,7 @@ export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
     } else {
       session = JSON.parse(session);
       if (Date.now() > session.expire) {
-        store.remove('sessionId');
-        store.remove('accessToken');
+        resetStore();
         setAuthenticated(false);
       } else {
         setAuthenticated(true);

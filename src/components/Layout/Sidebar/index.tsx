@@ -4,7 +4,7 @@ import PageviewIcon from '@mui/icons-material/Pageview';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import { MenuBar } from 'assets/svgs';
-import logoImg from 'assets/svgs/logo.png';
+import logoImg from 'assets/logo.png';
 import { cx } from 'styles';
 import styles from './sidebar.module.scss';
 
@@ -45,7 +45,7 @@ const Sidebar = (): JSX.Element => {
       className={cx(styles.aside, { [styles.hideSidebar]: !visibleSideBar }, { [styles.openSidebar]: visibleSideBar })}
     >
       <div className={styles.logo}>
-        <NavLink to='/' aria-label='link to home page' className={styles.logo}>
+        <NavLink to='/movie/list' aria-label='link to home page' className={styles.logo}>
           <img src={logoImg} className={styles.logoImage} alt='logo' />
           Dashboard
         </NavLink>
@@ -54,7 +54,7 @@ const Sidebar = (): JSX.Element => {
         <ul>
           <li>
             <NavLink
-              to='/'
+              to='/movie/list'
               aria-label='link to movielist page'
               className={({ isActive }) => cx({ [styles.isActive]: isActive })}
             >

@@ -30,6 +30,7 @@ export interface ITvItem {
   poster_path: string | null;
   vote_average: number;
   vote_count: number;
+  media_type?: string;
 }
 
 export interface IPersonItem {

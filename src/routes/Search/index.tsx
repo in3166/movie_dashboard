@@ -1,18 +1,17 @@
 import { useCallback, useState } from 'react';
 import store from 'store';
 
-import { IPersonItem } from 'types/item';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { getSelectedMovies, setSelectedMovies } from 'states/moives';
 import { addMovieItem } from 'services/movieAPI';
 import MovieTable from 'components/MovieTable';
 import Container from 'components/Container';
 import SearchBar from './SearchBar';
-import { IMAGE_BASE_URL } from 'constant';
-import defaultPerson from 'assets/defaultPerson.png';
 import styles from './search.module.scss';
 import { useSnackbar } from 'components/SnackBar/useSnackBar';
 import SnackBar from 'components/SnackBar';
+import Loading from 'components/Loading';
+import PeopleList from './PeopleList';
 
 const Search = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -21,11 +20,6 @@ const Search = (): JSX.Element => {
   const { message, setMessage } = useSnackbar(3000);
   const [snackBarStatus, setSnackBarStatus] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const [selectedPerson, setSelectedPerson] = useState([]);
-  const handleClickPerson = (person: IPersonItem) => {
-    setSelectedPerson(person.known_for || []);
-  };
 
   const selectedMovies = useAppSelector(getSelectedMovies);
 
@@ -63,47 +57,9 @@ const Search = (): JSX.Element => {
         setSnackBarStatus={setSnackBarStatus}
       />
       <div>
-        {renderByFilter === 'people' ? (
-          <>
-            <div className={styles.peopleContainer}>
-              {items.map((value: IPersonItem) => {
-                return (
-                  <div
-                    key={value.id}
-                    role='presentation'
-                    className={styles.peopleList}
-                    onClick={() => handleClickPerson(value)}
-                    title={value.name}
-                  >
-                    <img
-                      src={value.profile_path === null ? defaultPerson : IMAGE_BASE_URL + value.profile_path}
-                      className={styles.peopleImaage}
-                      alt='person profile'
-                    />
-                    <div>{value.name}</div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className={styles.personListWrapper}>
-              <h3>출연작</h3>
-              <section className={styles.tableSection}>
-                <h4>Movie</h4>
-                <MovieTable
-                  rows={selectedPerson?.filter((value: { media_type: string }) => value.media_type === 'movie')}
-                  filter='movie'
-                />
-              </section>
-              <section className={styles.tableSection}>
-                <h4>TV</h4>
-                <MovieTable
-                  rows={selectedPerson?.filter((value: { media_type: string }) => value.media_type === 'tv')}
-                  filter='tv'
-                />
-              </section>
-            </div>
-          </>
-        ) : (
+        {loading && <Loading />}
+        {!loading && renderByFilter === 'people' && <PeopleList items={items} />}
+        {!loading && renderByFilter !== 'people' && (
           <Container>
             <MovieTable rows={items} filter={renderByFilter} />
           </Container>

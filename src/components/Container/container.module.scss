@@ -4,7 +4,7 @@
 .container {
   position: relative;
   padding: 30px;
-  margin-top: 35px;
+  margin-top: 30px;
   border: 1px solid colors.$GRAYD;
   border-radius: 10px;
   @include responsive.mobileOnly {

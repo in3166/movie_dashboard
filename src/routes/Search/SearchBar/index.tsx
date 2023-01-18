@@ -28,9 +28,14 @@ const SearchBar = ({ setItems, setFilter, setLoading, setSnackBarStatus, setMess
   const dispatch = useAppDispatch();
 
   const handleSearchSubmit = async (e: FormEvent) => {
-    setLoading(true);
+    e.preventDefault();
+    if (!searchText || searchText === '') {
+      setSnackBarStatus('warning');
+      setMessage(`검색어를 입력해주세요.`);
+      return;
+    }
     try {
-      e.preventDefault();
+      setLoading(true);
       const { data } = await searchRequest[selectFilterValue](searchText);
       setFilter(selectFilterValue);
       setItems(data.results);

@@ -71,6 +71,7 @@
 │  │  │  └─ Search
 │  │  │     └─ SearchBar
 │  │  ├─ services
+│  │  ├─ utils
 │  │  ├─ states
 │  │  ├─ styles
 │  │  │  ├─ base
